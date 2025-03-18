@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация пользователя</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .loginBox {
+            padding: 25px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        h2.LogInHeading {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .input-field {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .input-field:focus {
+            border-color: rgb(26, 128, 230);
+            outline: none;
+        }
+
+        textarea.input-field {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgb(26, 128, 230);
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: rgb(20, 100, 200);
+        }
+
+        @media (max-width: 480px) {
+            .loginBox {
+                padding: 15px;
+                max-width: 100%;
+            }
+
+            .input-field, .btn {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h2 class="LogInHeading">Регистрация пользователя</h2>
+        <div class="loginBox">
+            <form id="registrationForm" action="your_registration_endpoint" method="POST">
+                <!-- Основні дані -->
+                <div class="form-group">
+                    <label for="username">Имя пользователя:</label>
+                    <input type="text" id="username" name="username" required placeholder="Введите имя пользователя" class="input-field">
+                </div>
+                <div class="form-group">
+                    <label for="realName">Настоящее имя:</label>
+                    <input type="text" id="realName" name="realName" placeholder="Введите ваше настоящее имя" class="input-field">
+                </div>
+                <div class="form-group">
+                    <label for="age">Возраст:</label>
+                    <input type="number" id="age" name="age" min="1" max="120" placeholder="Введите ваш возраст" class="input-field">
+                </div>
+                <div class="form-group">
+                    <label for="location">Местоположение:</label>
+                    <input type="text" id="location" name="location" placeholder="Введите ваше местоположение" class="input-field">
+                </div>
+                <div class="form-group">
+                    <label for="description">Описание:</label>
+                    <textarea id="description" name="description" placeholder="О себе (например, ищу команду)" class="input-field"></textarea>
+                </div>
+
+                <!-- Steam -->
+                <div class="form-group">
+                    <label for="steamId">Steam ID:</label>
+                    <input type="text" id="steamId" name="steamId" placeholder="Введите ваш Steam ID (например, 76561198045727589)" class="input-field">
+                </div>
+
+                <!-- Мови -->
+                <div class="form-group">
+                    <label for="languages">Языки:</label>
+                    <input type="text" id="languages" name="languages" placeholder="Введите языки (через запятую)" class="input-field">
+                </div>
+
+                <!-- Улюблені жанри -->
+                <div class="form-group">
+                    <label for="preferredGenres">Предпочитаемые жанры:</label>
+                    <input type="text" id="preferredGenres" name="preferredGenres" placeholder="Введите жанры (через запятую)" class="input-field">
+                </div>
+
+                <!-- Роль -->
+                <div class="form-group">
+                    <label for="preferredRole">Предпочитаемая роль:</label>
+                    <input type="text" id="preferredRole" name="preferredRole" placeholder="Например, снайпер" class="input-field">
+                </div>
+
+                <!-- Розклад -->
+                <div class="form-group">
+                    <label for="scheduleWeekdays">Расписание (будни):</label>
+                    <input type="text" id="scheduleWeekdays" name="scheduleWeekdays" placeholder="Например, 18:00-23:00" class="input-field">
+                </div>
+                <div class="form-group">
+                    <label for="scheduleWeekends">Расписание (выходные):</label>
+                    <input type="text" id="scheduleWeekends" name="scheduleWeekends" placeholder="Например, 14:00-02:00" class="input-field">
+                </div>
+
+                <!-- Топ ігор -->
+                <div class="form-group">
+                    <label>Топ 3 любимые игры:</label>
+                    <input type="text" id="topGame1" name="topGames[0][name]" placeholder="Название игры 1" class="input-field">
+                    <input type="number" name="topGames[0][playtime]" placeholder="Часы игры 1" class="input-field">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="topGame2" name="topGames[1][name]" placeholder="Название игры 2" class="input-field">
+                    <input type="number" name="topGames[1][playtime]" placeholder="Часы игры 2" class="input-field">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="topGame3" name="topGames[2][name]" placeholder="Название игры 3" class="input-field">
+                    <input type="number" name="topGames[2][playtime]" placeholder="Часы игры 3" class="input-field">
+                </div>
+
+                <!-- Шукаю -->
+                <div class="form-group">
+                    <label for="lookingFor">Ищу:</label>
+                    <input type="text" id="lookingFor" name="lookingFor" placeholder="Например, команда, турниры" class="input-field">
+                </div>
+
+                <!-- Рівень навичок -->
+                <div class="form-group">
+                    <label for="skillLevel">Уровень навыков:</label>
+                    <select id="skillLevel" name="skillLevel" class="input-field">
+                        <option value="">Выберите уровень</option>
+                        <option value="низкий">Низкий</option>
+                        <option value="средний">Средний</option>
+                        <option value="высокий">Высокий</option>
+                    </select>
+                </div>
+
+                <!-- Голосовий чат -->
+                <div class="form-group">
+                    <label>Использую голосовой чат:</label>
+                    <input type="checkbox" id="voiceChat" name="voiceChat" value="true">
+                </div>
+                <div class="form-group">
+                    <label for="voiceChatPlatforms">Платформы голосового чата:</label>
+                    <input type="text" id="voiceChatPlatforms" name="voiceChatPlatforms" placeholder="Например, Discord, Steam Voice" class="input-field">
+                </div>
+
+                <!-- Discord -->
+                <div class="form-group">
+                    <label for="discordTag">Discord Tag:</label>
+                    <input type="text" id="discordTag" name="discordTag" placeholder="Например, CyberNinja#4523" class="input-field">
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn">Зарегистрироваться</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

@@ -111,3 +111,47 @@ main {
     display: block;
     margin: 0 auto;
 }
+
+.steamICON{
+  border-radius: 100%;
+  width: 20px;
+}
+
+
+
+.loginBox {
+  margin: 20px auto; /* Центрирование формы */
+  padding: 20px; /* Внутренние отступы */
+  background-color: rgba(255, 255, 255, 0.1); /* Полупрозрачный фон */
+  border-radius: 10px; /* Скругленные углы */
+  max-width: 400px; /* Максимальная ширина формы */
+}
+
+.form-group {
+  margin-bottom: 15px; /* Отступ между полями */
+}
+
+label {
+  display: block; /* Отображение меток как блочных элементов */
+  margin-bottom: 5px; /* Отступ снизу для меток */
+  color: white; /* Цвет текста меток */
+}
+
+input {
+  width: 100%; /* Ширина полей ввода */
+  padding: 10px; /* Внутренние отступы */
+  border: 1px solid #ccc; /* Цвет границы */
+  border-radius: 5px; /* Скругленные углы */
+  background-color: rgba(255, 255, 255, 0.2); /* Полупрозрачный фон для инпутов */
+  color: white; /* Цвет текста в инпутах */
+  font-size: 16px; /* Размер шрифта */
+  transition: border-color 0.3s; /* Плавный переход цвета границы */
+}
+
+input:focus {
+  border-color: rgb(26, 128, 230); /* Цвет границы при фокусе */
+  outline: none; /* Убираем стандартный контур */
+  background-color: rgba(255, 255, 255, 0.3); /* Изменение фона при фокусе */
+}
+
+/* */
