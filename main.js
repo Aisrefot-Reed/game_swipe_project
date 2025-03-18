@@ -7,6 +7,8 @@ fetch("./database.json")
 
         const formatNumber = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
+        const userCards = []; // Массив для хранения карточек пользователей
+
         const renderUser = (userId) => {
             const user = db.users.find(u => u.id === userId);
             if (!user) {
@@ -30,28 +32,47 @@ fetch("./database.json")
             const location = user.location ? `<p>Город📍 ${user.location}</p>` : "";
             const voiceChat = user.voiceChat ? `<p>Войс-чаты🎙 ${user.voiceChatPlatforms.join(", ")}</p>` : "";
 
-            main.insertAdjacentHTML("beforeend", `
-                <div class="user-card" data-user-id="${user.id}">
-                    <img src="${user.avatar}" alt="Аватар ${user.username}">
-                    <div class="user-info">
-                        <h2 class="${statusClass}">${cleanUsername(user.username)}, ${user.age} ${statusIcon}</h2>
-                        <p><strong>${user.realName}</strong> — Уровень игры ${user.skillLevel}</p>
-                        <p>${user.description}</p>
-                        ${topGames}
-                        ${location}
-                        ${languages}
-                        ${voiceChat}
+            // Сохраняем карточку пользователя в массив
+            userCards.push({
+                userId: user.id,
+                avatar: user.avatar,
+                username: cleanUsername(user.username),
+                age: user.age,
+                statusClass: statusClass,
+                statusIcon: statusIcon,
+                realName: user.realName,
+                skillLevel: user.skillLevel,
+                description: user.description,
+                topGames: topGames,
+                location: location,
+                languages: languages,
+                voiceChat: voiceChat
+            });
+
+            // Убираем рендеринг
+        };
+
+        const renderUserCards = () => {
+            userCards.forEach(userCard => {
+                main.insertAdjacentHTML("beforeend", `
+                    <div class="userCard">
+                        <img src="${userCard.avatar}" alt="${userCard.username}'s avatar" class="userAvatar">
+                        <p class="userName">${userCard.username}</p>
+                        <p class="userAge aBitGray">Age: ${userCard.age}</p>
+                        <div class="userLastLine">
+                            <p class="${userCard.statusClass} aBitGray"><!--${userCard.statusIcon} --> ${userCard.statusClass === 'status-online' ? 'online' : 'offline'}</p>
+                            <button class="btn btn-primary like" title="Like">Like</button>
+                        </div>
                     </div>
-                    <div class="actions">
-                        <button class="dislike" title="Не нравится"><i class="fas fa-times"></i></button>
-                        <button class="like" title="Нравится"><i class="fas fa-heart"></i></button>
-                    </div>
-                </div>
-            `);
+                `);
+            });
         };
 
         // Рендеринг всех пользователей
         db.users.forEach(user => renderUser(user.id));
+
+        // Вызов функции рендеринга карточек пользователей
+        renderUserCards();
 
         // Обработчики событий
         document.addEventListener("click", (e) => {
