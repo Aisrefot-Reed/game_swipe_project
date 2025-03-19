@@ -2,16 +2,12 @@
   "users": [
     {
       "id": "user1",
-      "steamId": "76561198045727589",
       "username": "CyberNinja",
       "realName": "Алексей",
       "age": 25,
-      "avatar": "data:image/jpeg;base64,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",
+      "emailUser": true,
+      "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUfXkFR4FpWi62-7YpoWh1nvgWkf_3DTwhPw&s",
       "status": "online",
-      "steamLevel": 42,
-      "accountCreated": "2012-03-18",
-      "lastOnline": "2025-03-14T09:23:45Z",
-      "totalPlaytime": 7842,
       "description": "Ищу команду для киберспортивных турниров по CS2. Играю в роли снайпера. Свободен по вечерам в будни и в выходные.",
       "location": "Москва",
       "languages": ["русский", "английский"],
@@ -24,64 +20,58 @@
       "topGames": [
         {
           "name": "Counter-Strike 2",
-          "appId": 730,
-          "playtime": 3420,
-          "lastPlayed": "2025-03-13T22:12:10Z",
-          "achievements": 76
+          "playtime": 3420
         },
         {
           "name": "Dota 2",
-          "appId": 570,
-          "playtime": 1245,
-          "lastPlayed": "2025-02-28T18:45:30Z",
-          "achievements": 42
+          "playtime": 1245
         },
         {
           "name": "PUBG: BATTLEGROUNDS",
-          "appId": 578080,
-          "playtime": 952,
-          "lastPlayed": "2025-03-10T19:30:22Z",
-          "achievements": 28
-        }
-      ],
-      "recentlyPlayed": [
-        {
-          "name": "Counter-Strike 2",
-          "appId": 730,
-          "playtime": 3420,
-          "lastPlayed": "2025-03-13T22:12:10Z"
-        },
-        {
-          "name": "PUBG: BATTLEGROUNDS",
-          "appId": 578080,
-          "playtime": 952,
-          "lastPlayed": "2025-03-10T19:30:22Z"
-        },
-        {
-          "name": "Apex Legends",
-          "appId": 1172470,
-          "playtime": 412,
-          "lastPlayed": "2025-03-09T15:18:45Z"
+          "playtime": 952
         }
       ],
       "lookingFor": ["команда", "турниры", "регулярные игры"],
       "skillLevel": "высокий",
       "voiceChat": true,
       "voiceChatPlatforms": ["Discord", "Steam Voice"],
-      "discordTag": "CyberNinja#4523"
+      "discordTag": "CyberNinja#4523",
+      "steam": {
+        "steamId": "76561198045727589",
+        "steamLevel": 42,
+        "accountCreated": "2012-03-18",
+        "lastOnline": "2025-03-14T09:23:45Z",
+        "totalPlaytime": 7842,
+        "recentlyPlayed": [
+          {
+            "name": "Counter-Strike 2",
+            "appId": 730,
+            "playtime": 3420,
+            "lastPlayed": "2025-03-13T22:12:10Z"
+          },
+          {
+            "name": "PUBG: BATTLEGROUNDS",
+            "appId": 578080,
+            "playtime": 952,
+            "lastPlayed": "2025-03-10T19:30:22Z"
+          },
+          {
+            "name": "Apex Legends",
+            "appId": 1172470,
+            "playtime": 412,
+            "lastPlayed": "2025-03-09T15:18:45Z"
+          }
+        ]
+      }
     },
     {
       "id": "user2",
-      "steamId": "76561198078923456",
       "username": "PhantomHealer",
       "realName": "Екатерина",
       "age": 23,
-      "avatar": "data:image/jpeg;base64,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",
+      "emailUser": false,
+      "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0qCreqkTZL0F0bF9kZctFE1XVFocO__70kw&s",
       "status": "offline",
-      "steamLevel": 28,
-      "accountCreated": "2015-06-22",
-      "lastOnline": "2025-03-12T22:15:28Z",
-      "totalPlaytime": 3256,
       "description": "Казуальный игрок, люблю кооперативные приключения и RPG. Играю для удовольствия, не для соревнований. Ищу дружелюбных сокомандников.",
       "location": "Санкт-Петербург",
       "languages": ["русский"],
@@ -94,64 +84,58 @@
       "topGames": [
         {
           "name": "The Elder Scrolls Online",
-          "appId": 306130,
-          "playtime": 1420,
-          "lastPlayed": "2025-03-12T21:45:22Z",
-          "achievements": 145
+          "playtime": 1420
         },
         {
           "name": "Stardew Valley",
-          "appId": 413150,
-          "playtime": 652,
-          "lastPlayed": "2025-03-11T20:12:18Z",
-          "achievements": 32
+          "playtime": 652
         },
         {
           "name": "Sea of Thieves",
-          "appId": 1172620,
-          "playtime": 512,
-          "lastPlayed": "2025-03-05T18:34:45Z",
-          "achievements": 48
-        }
-      ],
-      "recentlyPlayed": [
-        {
-          "name": "The Elder Scrolls Online",
-          "appId": 306130,
-          "playtime": 1420,
-          "lastPlayed": "2025-03-12T21:45:22Z"
-        },
-        {
-          "name": "Stardew Valley",
-          "appId": 413150,
-          "playtime": 652,
-          "lastPlayed": "2025-03-11T20:12:18Z"
-        },
-        {
-          "name": "Baldur's Gate 3",
-          "appId": 1086940,
-          "playtime": 310,
-          "lastPlayed": "2025-03-10T19:22:15Z"
+          "playtime": 512
         }
       ],
       "lookingFor": ["друзья", "кооператив", "казуальные игры"],
       "skillLevel": "средний",
       "voiceChat": true,
       "voiceChatPlatforms": ["Discord"],
-      "discordTag": "PhantomHealer#7821"
+      "discordTag": "PhantomHealer#7821",
+      "steam": {
+        "steamId": "76561198078923456",
+        "steamLevel": 28,
+        "accountCreated": "2015-06-22",
+        "lastOnline": "2025-03-12T22:15:28Z",
+        "totalPlaytime": 3256,
+        "recentlyPlayed": [
+          {
+            "name": "The Elder Scrolls Online",
+            "appId": 306130,
+            "playtime": 1420,
+            "lastPlayed": "2025-03-12T21:45:22Z"
+          },
+          {
+            "name": "Stardew Valley",
+            "appId": 413150,
+            "playtime": 652,
+            "lastPlayed": "2025-03-11T20:12:18Z"
+          },
+          {
+            "name": "Baldur's Gate 3",
+            "appId": 1086940,
+            "playtime": 310,
+            "lastPlayed": "2025-03-10T19:22:15Z"
+          }
+        ]
+      }
     },
     {
       "id": "user3",
-      "steamId": "76561198156782345",
       "username": "StratCommander",
       "realName": "Михаил",
       "age": 29,
-      "avatar": "data:image/jpeg;base64,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",
+      "emailUser": false,
+      "avatar": "./assets/img/loginFriends.png",
       "status": "away",
-      "steamLevel": 65,
-      "accountCreated": "2010-01-05",
-      "lastOnline": "2025-03-13T16:42:33Z",
-      "totalPlaytime": 12456,
       "description": "Стратег и командный игрок с 15-летним опытом в RTS и MOBA. Ищу серьезную команду для соревновательных игр. Могу быть капитаном.",
       "location": "Новосибирск",
       "languages": ["русский", "английский", "немецкий"],
@@ -164,51 +148,49 @@
       "topGames": [
         {
           "name": "Dota 2",
-          "appId": 570,
-          "playtime": 5286,
-          "lastPlayed": "2025-03-13T14:22:05Z",
-          "achievements": 154
+          "playtime": 5286
         },
         {
           "name": "Civilization VI",
-          "appId": 289070,
-          "playtime": 2345,
-          "lastPlayed": "2025-03-11T23:15:42Z",
-          "achievements": 192
+          "playtime": 2345
         },
         {
           "name": "Stellaris",
-          "appId": 281990,
-          "playtime": 1845,
-          "lastPlayed": "2025-03-09T22:33:18Z",
-          "achievements": 97
-        }
-      ],
-      "recentlyPlayed": [
-        {
-          "name": "Dota 2",
-          "appId": 570,
-          "playtime": 5286,
-          "lastPlayed": "2025-03-13T14:22:05Z"
-        },
-        {
-          "name": "Civilization VI",
-          "appId": 289070,
-          "playtime": 2345,
-          "lastPlayed": "2025-03-11T23:15:42Z"
-        },
-        {
-          "name": "Total War: WARHAMMER III",
-          "appId": 1142710,
-          "playtime": 678,
-          "lastPlayed": "2025-03-12T21:17:29Z"
+          "playtime": 1845
         }
       ],
       "lookingFor": ["команда", "соревнования", "стратегическое планирование"],
       "skillLevel": "профессиональный",
       "voiceChat": true,
       "voiceChatPlatforms": ["Discord", "TeamSpeak", "Steam Voice"],
-      "discordTag": "StratCommander#1234"
+      "discordTag": "StratCommander#1234",
+      "steam": {
+        "steamId": "76561198156782345",
+        "steamLevel": 65,
+        "accountCreated": "2010-01-05",
+        "lastOnline": "2025-03-13T16:42:33Z",
+        "totalPlaytime": 12456,
+        "recentlyPlayed": [
+          {
+            "name": "Dota 2",
+            "appId": 570,
+            "playtime": 5286,
+            "lastPlayed": "2025-03-13T14:22:05Z"
+          },
+          {
+            "name": "Civilization VI",
+            "appId": 289070,
+            "playtime": 2345,
+            "lastPlayed": "2025-03-11T23:15:42Z"
+          },
+          {
+            "name": "Total War: WARHAMMER III",
+            "appId": 1142710,
+            "playtime": 678,
+            "lastPlayed": "2025-03-12T21:17:29Z"
+          }
+        ]
+      }
     }
   ],
   "matches": [

@@ -154,4 +154,13 @@ input:focus {
   background-color: rgba(255, 255, 255, 0.3); /* Изменение фона при фокусе */
 }
 
+.loginButtons a {
+    color: white; /* Цвет текста */
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+.loginButtons a:hover {
+    text-decoration: underline; /* Подчеркивание при наведении */
+}
+
 /* */

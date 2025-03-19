@@ -1,11 +1,11 @@
+const formatNumber = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+
 fetch("./database.json")
     .then(response => response.json())
     .then(db => {
         const main = document.getElementById("main");
 
         const cleanUsername = (username) => username.replace(/#\d{4}$/, "");
-
-        const formatNumber = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
         const userCards = []; // Массив для хранения карточек пользователей
 
@@ -48,20 +48,18 @@ fetch("./database.json")
                 languages: languages,
                 voiceChat: voiceChat
             });
-
-            // Убираем рендеринг
         };
 
         const renderUserCards = () => {
             userCards.forEach(userCard => {
                 main.insertAdjacentHTML("beforeend", `
-                    <div class="userCard">
+                    <div class="userCard" id="${userCard.userId}" data-user-id="${userCard.userId}">
                         <img src="${userCard.avatar}" alt="${userCard.username}'s avatar" class="userAvatar">
                         <p class="userName">${userCard.username}</p>
                         <p class="userAge aBitGray">Age: ${userCard.age}</p>
                         <div class="userLastLine">
                             <p class="${userCard.statusClass} aBitGray"><!--${userCard.statusIcon} --> ${userCard.statusClass === 'status-online' ? 'online' : 'offline'}</p>
-                            <button class="btn btn-primary like" title="Like">Like</button>
+                            <button class="btn btn-primary like" title="Like">Лайк</button>
                         </div>
                     </div>
                 `);
@@ -76,17 +74,69 @@ fetch("./database.json")
 
         // Обработчики событий
         document.addEventListener("click", (e) => {
-            const button = e.target.closest("button");
-            if (!button) return;
+            const card = e.target.closest(".userCard");
+            const likeButton = e.target.closest(".like"); // Проверяем, был ли клик на кнопке "Лайк"
 
-            const card = button.closest(".user-card");
-            const userId = card.dataset.userId;
+            if (likeButton) {
+                // Если кликнули на кнопку "Лайк", ничего не делаем
+                return;
+            }
 
-            if (button.classList.contains("like")) {
-                console.log(`Пользователь ${userId} понравился!`);
-            } else if (button.classList.contains("dislike")) {
-                console.log(`Пользователь ${userId} не понравился!`);
+            if (card) {
+                const userId = card.dataset.userId;
+                openModal(db.users.find(u => u.id === userId)); // Открываем модальное окно при клике на карточку
             }
         });
+
+        document.querySelector('.bi-xii').addEventListener('click', closeModal);
     })
     .catch(error => console.error("Ошибка загрузки JSON:", error));
+
+function openModal(user) {
+    let oMain = document.querySelector("#main");
+    let oModal = document.querySelector(".modal");
+    oModal.classList.add("opened");
+    oMain.classList.add("closed");
+
+    const modalBody = oModal.querySelector(".modalBody");
+    modalBody.innerHTML = `
+        <div class="modalContent">
+            <img src="${user.avatar}" alt="${user.username}'s avatar" class="userAvatar" style="max-height: 150px;">
+            <h2>${user.username}</h2>
+            <p><strong>Реальное имя:</strong> ${user.realName}</p>
+            <p><strong>Возраст:</strong> ${user.age}</p>
+            <p><strong>Город:</strong> ${user.location}</p>
+            <p><strong>Описание:</strong> ${user.description}</p>
+            <p><strong>Языки:</strong> ${user.languages.join(", ")}</p>
+            <div class="topGames">
+                <h3>Топ игры:</h3>
+                <ul>
+                    ${user.topGames.map(game => `<li>${game.name} — ${formatNumber(game.playtime)} часов</li>`).join("")}
+                </ul>
+            </div>
+            <div class="schedule">
+                <h3>Расписание:</h3>
+                <p><strong>Будни:</strong> ${user.schedule.weekdays.join(", ")}</p>
+                <p><strong>Выходные:</strong> ${user.schedule.weekends.join(", ")}</p>
+            </div>
+            <button class="btn btn-primary like" title="Like">Лайк</button> <!-- Кнопка лайка -->
+        </div>
+    `;
+
+    // Привязка обработчика события для кнопки "Назад"
+    const closeButton = oModal.querySelector('.close-button');
+    closeButton.addEventListener('click', closeModal);
+
+    // Привязка обработчика события для кнопки "Лайк"
+    const likeButton = modalBody.querySelector('.like');
+    likeButton.addEventListener('click', () => {
+        console.log(`Пользователь ${user.username} понравился!`);
+        closeModal(); // Закрываем модалку после лайка (по желанию)
+    });
+}
+
+function closeModal() {
+    let oMain = document.querySelector("#main");
+    let oModal = document.querySelector(".modal");
+    oModal.classList.remove("opened");
+    oMain.classList.remove("closed");}
