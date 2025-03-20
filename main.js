@@ -1,116 +1,24 @@
 const formatNumber = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
-document.addEventListener('DOMContentLoaded', () => {
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    const loggedInUser = localStorage.getItem('loggedInUser');
+// Определяем функции перед их использованием
+function openModal(user) {
+    const oMain = document.querySelector("#main");
+    const oModal = document.querySelector(".modal");
 
-    if (!loggedInUser) {
-        alert('Пожалуйста, войдите в систему.');
-        window.location.href = './login/emailLogin.html'; // Перенаправление на страницу входа
+    if (!oMain || !oModal) {
+        console.error("Не найдены элементы main или modal");
         return;
     }
 
-    // Загрузка данных пользователей из database.json
-    fetch("./database.json")
-        .then(response => response.json())
-        .then(db => {
-            const main = document.getElementById("main");
-
-            const cleanUsername = (username) => username.replace(/#\d{4}$/, "");
-
-            const userCards = []; // Массив для хранения карточек пользователей
-
-            const renderUser = (userId) => {
-                const user = db.users.find(u => u.id === userId);
-                if (!user) {
-                    console.error(`Пользователь с ID ${userId} не найден`);
-                    return;
-                }
-
-                const statusClass = user.status === "online" ? "status-online" :
-                                    user.status === "offline" ? "status-offline" : "status-away";
-                const statusIcon = user.status === "online" ? "🟢" :
-                                   user.status === "offline" ? "🔴" : "🟡";
-
-                const topGames = user.topGames?.length ? `
-                    <div class="section-title">🎮 Топ игры:</div>
-                    <ul class="game-list">
-                        ${user.topGames.slice(0, 3).map(game => `<li>${game.name} — ${formatNumber(game.playtime)} hours</li>`).join("")}
-                    </ul>
-                ` : "";
-
-                const languages = user.languages?.length ? `<p>Языки🗣 ${user.languages.join(", ")}</p>` : "";
-                const location = user.location ? `<p>Город📍 ${user.location}</p>` : "";
-                const voiceChat = user.voiceChat ? `<p>Войс-чаты🎙 ${user.voiceChatPlatforms.join(", ")}</p>` : "";
-
-                // Сохраняем карточку пользователя в массив
-                userCards.push({
-                    userId: user.id,
-                    avatar: user.avatar,
-                    username: cleanUsername(user.username),
-                    age: user.age,
-                    statusClass: statusClass,
-                    statusIcon: statusIcon,
-                    realName: user.realName,
-                    skillLevel: user.skillLevel,
-                    description: user.description,
-                    topGames: topGames,
-                    location: location,
-                    languages: languages,
-                    voiceChat: voiceChat
-                });
-            };
-
-            const renderUserCards = () => {
-                userCards.forEach(userCard => {
-                    main.insertAdjacentHTML("beforeend", `
-                        <div class="userCard" id="${userCard.userId}" data-user-id="${userCard.userId}">
-                            <img src="${userCard.avatar}" alt="${userCard.username}'s avatar" class="userAvatar">
-                            <p class="userName">${userCard.username}</p>
-                            <p class="userAge aBitGray">Age: ${userCard.age}</p>
-                            <div class="userLastLine">
-                                <p class="${userCard.statusClass} aBitGray"><!--${userCard.statusIcon} --> ${userCard.statusClass === 'status-online' ? 'online' : 'offline'}</p>
-                                <button class="btn btn-primary like" title="Like">Лайк</button>
-                            </div>
-                        </div>
-                    `);
-                });
-            };
-
-            // Рендеринг всех пользователей
-            db.users.forEach(user => renderUser(user.id));
-
-            // Вызов функции рендеринга карточек пользователей
-            renderUserCards();
-
-            // Обработчики событий
-            document.addEventListener("click", (e) => {
-                const card = e.target.closest(".userCard");
-                const likeButton = e.target.closest(".like"); // Проверяем, был ли клик на кнопке "Лайк"
-
-                if (likeButton) {
-                    // Если кликнули на кнопку "Лайк", ничего не делаем
-                    return;
-                }
-
-                if (card) {
-                    const userId = card.dataset.userId;
-                    openModal(db.users.find(u => u.id === userId)); // Открываем модальное окно при клике на карточку
-                }
-            });
-
-            document.querySelector('.bi-xii').addEventListener('click', closeModal);
-        })
-        .catch(error => console.error("Ошибка загрузки JSON:", error));
-});
-
-function openModal(user) {
-    let oMain = document.querySelector("#main");
-    let oModal = document.querySelector(".modal");
     oModal.classList.add("opened");
     oMain.classList.add("closed");
 
     const modalBody = oModal.querySelector(".modalBody");
+    if (!modalBody) {
+        console.error("Не найден элемент .modalBody");
+        return;
+    }
+
     modalBody.innerHTML = `
         <div class="modalContent">
             <img src="${user.avatar}" alt="${user.username}'s avatar" class="userAvatar" style="max-height: 150px;">
@@ -131,44 +39,151 @@ function openModal(user) {
                 <p><strong>Будни:</strong> ${user.schedule.weekdays.join(", ")}</p>
                 <p><strong>Выходные:</strong> ${user.schedule.weekends.join(", ")}</p>
             </div>
-            <button class="btn btn-primary like" title="Like">Лайк</button> <!-- Кнопка лайка -->
+            <button class="btn btn-primary like" title="Лайк">Лайк</button>
         </div>
     `;
 
-    // Привязка обработчика события для кнопки "Назад"
     const closeButton = oModal.querySelector('.close-button');
-    closeButton.addEventListener('click', closeModal);
+    if (closeButton) {
+        closeButton.addEventListener('click', closeModal);
+    } else {
+        console.error("Кнопка закрытия в модалке не найдена");
+    }
 
-    // Привязка обработчика события для кнопки "Лайк"
     const likeButton = modalBody.querySelector('.like');
-    likeButton.addEventListener('click', () => {
-        console.log(`Пользователь ${user.username} понравился!`);
-        closeModal(); // Закрываем модалку после лайка (по желанию)
-    });
+    if (likeButton) {
+        likeButton.addEventListener('click', () => {
+            console.log(`Пользователь ${user.username} понравился!`);
+            closeModal();
+        });
+    }
 }
 
 function closeModal() {
-    let oMain = document.querySelector("#main");
-    let oModal = document.querySelector(".modal");
+    const oMain = document.querySelector("#main");
+    const oModal = document.querySelector(".modal");
+
+    if (!oMain || !oModal) {
+        console.error("Не найдены элементы main или modal при закрытии");
+        return;
+    }
+
     oModal.classList.remove("opened");
     oMain.classList.remove("closed");
 }
 
-function login(username, password) {
-    const user = db.users.find(u => u.username === username);
-    if (!user) {
-        console.error("Пользователь не найден");
-        return false;
-    }
-    if (user.password !== password) {
-        console.error("Неверный пароль");
-        return false;
-    }
-    console.log("Успешный вход!");
-    return true;
-}
+document.addEventListener('DOMContentLoaded', async () => {
+    const loggedInUser = localStorage.getItem('loggedInUser');
 
-// Пример вызова функции входа
-const usernameInput = "CyberNinja"; // Получите это значение из формы
-const passwordInput = "123"; // Получите это значение из формы
-login(usernameInput, passwordInput);
+    if (!loggedInUser) {
+        alert('Пожалуйста, войдите в систему.');
+        window.location.href = './login/emailLogin.html';
+        return;
+    }
+
+    console.log("Текущий пользователь:", loggedInUser);
+
+    let db;
+    try {
+        const response = await fetch("./database.json");
+        db = await response.json();
+    } catch (error) {
+        console.error("Ошибка загрузки JSON:", error);
+        return;
+    }
+
+    const main = document.getElementById("main");
+    if (!main) {
+        console.error("Элемент с id='main' не найден");
+        return;
+    }
+
+    const cleanUsername = (username) => username.replace(/#\d{4}$/, "");
+    const userCards = [];
+
+    const renderUser = (userId) => {
+        const user = db.users.find(u => u.id === userId);
+        if (!user) {
+            console.error(`Пользователь с ID ${userId} не найден`);
+            return;
+        }
+        if (user.username === loggedInUser) {
+            console.log(`Пропускаем рендеринг текущего пользователя: ${loggedInUser}`);
+            return;
+        }
+
+        const statusClass = user.status === "online" ? "status-online" :
+                            user.status === "offline" ? "status-offline" : "status-away";
+        const statusIcon = user.status === "online" ? "🟢" :
+                           user.status === "offline" ? "🔴" : "🟡";
+
+        const topGames = user.topGames?.length ? `
+            <div class="section-title">🎮 Топ игры:</div>
+            <ul class="game-list">
+                ${user.topGames.slice(0, 3).map(game => `<li>${game.name} — ${formatNumber(game.playtime)} часов</li>`).join("")}
+            </ul>
+        ` : "";
+
+        const languages = user.languages?.length ? `<p>Языки🗣 ${user.languages.join(", ")}</p>` : "";
+        const location = user.location ? `<p>Город📍 ${user.location}</p>` : "";
+        const voiceChat = user.voiceChat ? `<p>Войс-чаты🎙 ${user.voiceChatPlatforms.join(", ")}</p>` : "";
+
+        userCards.push({
+            userId: user.id,
+            avatar: user.avatar,
+            username: cleanUsername(user.username),
+            age: user.age,
+            statusClass: statusClass,
+            statusIcon: statusIcon,
+            realName: user.realName,
+            skillLevel: user.skillLevel,
+            description: user.description,
+            topGames: topGames,
+            location: location,
+            languages: languages,
+            voiceChat: voiceChat
+        });
+    };
+
+    const renderUserCards = () => {
+        console.log("Рендерим карточки пользователей:", userCards);
+        userCards.forEach(userCard => {
+            main.insertAdjacentHTML("beforeend", `
+                <div class="userCard" id="${userCard.userId}" data-user-id="${userCard.userId}">
+                    <img src="${userCard.avatar}" alt="${userCard.username}'s avatar" class="userAvatar">
+                    <p class="userName">${userCard.username}</p>
+                    <p class="userAge aBitGray">Возраст: ${userCard.age}</p>
+                    <div class="userLastLine">
+                        <p class="${userCard.statusClass} aBitGray">${userCard.statusClass === 'status-online' ? 'онлайн' : 'офлайн'}</p>
+                        <button class="btn btn-primary like" title="Лайк">Лайк</button>
+                    </div>
+                </div>
+            `);
+        });
+    };
+
+    db.users.forEach(user => renderUser(user.id));
+    renderUserCards();
+
+    // Обработчик кликов по карточкам
+    document.addEventListener("click", (e) => {
+        const card = e.target.closest(".userCard");
+        const likeButton = e.target.closest(".like");
+
+        if (likeButton) {
+            console.log("Клик по кнопке Лайк");
+            return;
+        }
+
+        if (card) {
+            const userId = card.dataset.userId;
+            const user = db.users.find(u => u.id === userId);
+            if (user) {
+                console.log(`Открываем модалку для ${user.username}`);
+                openModal(user);
+            } else {
+                console.error(`Пользователь с ID ${userId} не найден в db`);
+            }
+        }
+    });
+});
