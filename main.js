@@ -19,27 +19,96 @@ function openModal(user) {
         return;
     }
 
+    // Определяем класс статуса
+    const statusClass = user.status === "online" ? "modalStatusOnline" : 
+                        user.status === "offline" ? "modalStatusOffline" : 
+                        "modalStatusAway";
+    
+    // Форматируем статус для отображения
+    const statusText = user.status === "online" ? "онлайн" : 
+                      user.status === "offline" ? "офлайн" : 
+                      "не в сети";
+
     modalBody.innerHTML = `
-        <div class="modalContent">
-            <img src="${user.avatar}" alt="${user.username}'s avatar" class="userAvatar" style="max-height: 150px;">
-            <h2>${user.username}</h2>
-            <p><strong>Реальное имя:</strong> ${user.realName}</p>
-            <p><strong>Возраст:</strong> ${user.age}</p>
-            <p><strong>Город:</strong> ${user.location}</p>
-            <p><strong>Описание:</strong> ${user.description}</p>
-            <p><strong>Языки:</strong> ${user.languages.join(", ")}</p>
-            <div class="topGames">
-                <h3>Топ игры:</h3>
-                <ul>
-                    ${user.topGames.map(game => `<li>${game.name} — ${formatNumber(game.playtime)} часов</li>`).join("")}
-                </ul>
+        <div class="modalProfile">
+            <div class="modalProfileHeader">
+                <img src="${user.avatar || './assets/img/default-avatar.png'}" alt="${user.username}'s avatar" class="modalUserAvatar">
+                <div class="modalUserInfo">
+                    <h2 class="modalUserName">${user.username} <span class="modalUserRealName">(${user.realName || 'Имя не указано'})</span></h2>
+                    <p class="modalUserDetails">Возраст: ${user.age || 'Не указан'}</p>
+                    <p class="modalUserDetails">Город: ${user.location || 'Не указан'}</p>
+                    <p class="modalUserDetails">Статус: <span class="modalUserStatus ${statusClass}">${statusText}</span></p>
+                </div>
             </div>
-            <div class="schedule">
-                <h3>Расписание:</h3>
-                <p><strong>Будни:</strong> ${user.schedule.weekdays.join(", ")}</p>
-                <p><strong>Выходные:</strong> ${user.schedule.weekends.join(", ")}</p>
+
+            <div class="modalSection">
+                <h3 class="modalSectionTitle"><i class="bi bi-info-circle"></i> О себе</h3>
+                <div class="modalSectionContent">
+                    <p>${user.description || 'Описание отсутствует.'}</p>
+                </div>
             </div>
-            <button class="btn btn-primary like" title="Лайк">Лайк</button>
+
+            <div class="modalSection">
+                <h3 class="modalSectionTitle"><i class="bi bi-translate"></i> Языки</h3>
+                <div class="modalSectionContent">
+                    <p>${user.languages?.length ? user.languages.join(", ") : 'Не указаны'}</p>
+                </div>
+            </div>
+
+            <div class="modalSection">
+                <h3 class="modalSectionTitle"><i class="bi bi-joystick"></i> Предпочтения</h3>
+                <div class="modalSectionContent">
+                    <p><strong>Жанры:</strong> ${user.preferredGenres?.length ? user.preferredGenres.join(", ") : 'Не указаны'}</p>
+                    <p><strong>Роль:</strong> ${user.preferredRole || 'Не указана'}</p>
+                    <p><strong>Уровень:</strong> ${user.skillLevel || 'Не указан'}</p>
+                    <p><strong>Ищу:</strong> ${user.lookingFor?.length ? user.lookingFor.join(", ") : 'Не указано'}</p>
+                </div>
+            </div>
+
+            ${user.topGames?.length ? `
+            <div class="modalSection">
+                <h3 class="modalSectionTitle"><i class="bi bi-controller"></i> Топ игры</h3>
+                <div class="modalSectionContent">
+                    <ul class="modalGameList">
+                        ${user.topGames.map(game => `<li>${game.name} — ${formatNumber(game.playtime)} часов</li>`).join("")}
+                    </ul>
+                </div>
+            </div>` : ''}
+
+            ${user.steam ? `
+            <div class="modalSection">
+                <h3 class="modalSectionTitle"><i class="bi bi-steam"></i> Steam</h3>
+                <div class="modalSectionContent">
+                    <p><strong>Steam ID:</strong> ${user.steam.steamId || 'Не указан'}</p>
+                    <p><strong>Уровень:</strong> ${user.steam.steamLevel || 'Не указан'}</p>
+                    <p><strong>Всего часов:</strong> ${user.steam.totalPlaytime ? formatNumber(user.steam.totalPlaytime) : 'Нет данных'}</p>
+                    ${user.steam.recentlyPlayed?.length ? `
+                        <h4>Недавно играл:</h4>
+                        <ul class="modalGameList">
+                            ${user.steam.recentlyPlayed.map(game => `<li>${game.name} (${formatNumber(game.playtime)} ч.)</li>`).join('')}
+                        </ul>
+                    ` : ''}
+                </div>
+            </div>` : ''}
+
+            <div class="modalSection">
+                <h3 class="modalSectionTitle"><i class="bi bi-calendar-week"></i> Расписание</h3>
+                <div class="modalSectionContent">
+                    <p><strong>Будни:</strong> ${user.schedule?.weekdays?.join(", ") || 'Не указано'}</p>
+                    <p><strong>Выходные:</strong> ${user.schedule?.weekends?.join(", ") || 'Не указано'}</p>
+                </div>
+            </div>
+
+            <div class="modalSection">
+                <h3 class="modalSectionTitle"><i class="bi bi-mic"></i> Голосовой чат</h3>
+                <div class="modalSectionContent">
+                    <p>${user.voiceChat ? 'Использую' : 'Не использую'}</p>
+                    ${user.voiceChat && user.voiceChatPlatforms?.length ? `<p>Платформы: ${user.voiceChatPlatforms.join(", ")}</p>` : ''}
+                    ${user.discordTag ? `<p>Discord: ${user.discordTag}</p>` : ''}
+                </div>
+            </div>
+
+            <button class="modalLikeButton">Лайк</button>
         </div>
     `;
 
@@ -50,7 +119,7 @@ function openModal(user) {
         console.error("Кнопка закрытия в модалке не найдена");
     }
 
-    const likeButton = modalBody.querySelector('.like');
+    const likeButton = modalBody.querySelector('.modalLikeButton');
     if (likeButton) {
         likeButton.addEventListener('click', () => {
             console.log(`Пользователь ${user.username} понравился!`);
@@ -84,12 +153,38 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log("Текущий пользователь:", loggedInUser);
 
     let db;
+    const mainContainer = document.getElementById("main"); // Получаем контейнер main
     try {
+        // Показываем индикатор загрузки
+        if(mainContainer) mainContainer.innerHTML = '<div class="loading-spinner"></div><p style="text-align:center; margin-top: 10px;">Загрузка пользователей...</p>';
+
         const response = await fetch("./database.json");
+         if (!response.ok) { // Проверка статуса ответа
+             throw new Error(`Ошибка сети: ${response.status} ${response.statusText}`);
+         }
         db = await response.json();
+
+        // Очищаем индикатор загрузки перед рендерингом
+        if(mainContainer) mainContainer.innerHTML = '';
+
     } catch (error) {
         console.error("Ошибка загрузки JSON:", error);
-        return;
+        // Отображаем ошибку в UI через Toastify
+        if (mainContainer) {
+             mainContainer.innerHTML = ''; // Очищаем спиннер
+         }
+         Toastify({
+             text: `😕 Не удалось загрузить данные: ${error.message}. Попробуйте обновить страницу.`,
+             duration: -1, // Не закрывать автоматически
+             gravity: "top",
+             position: "center",
+             backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)",
+             close: true, // Позволить закрыть
+             // Можно добавить кнопку для перезагрузки, но это сложнее с Toastify
+             // onClick: function(){ location.reload(); } // Перезагрузка по клику на тост
+         }).showToast();
+
+        return; // Прерываем выполнение
     }
 
     const main = document.getElementById("main");

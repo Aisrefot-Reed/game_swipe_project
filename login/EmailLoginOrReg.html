@@ -12,25 +12,23 @@
     />
     <link rel="stylesheet" href="./main.css" />
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
+        .choiceButtons {
+            margin-top: 20px;
         }
-        .btn {
-            margin: 10px 0;
-        }
-        a {
-            text-decoration: none;
-            color: inherit;
+        h2 {
+           color: #fff;
+           margin-bottom: 30px;
+           font-weight: 600;
         }
     </style>
 </head>
 <body>
-    <button type="button" class="btn btn-secondary loginEmail"><a href="./email.html">Register</a></button>
-    <button type="button" class="btn btn-primary loginNext"><a href="./emailLogin.html">login</a></button>
+    <main>
+        <h2>Выберите действие</h2>
+        <div class="choiceButtons">
+            <button type="button" class="btn btn-secondary loginEmail"><a href="./email.html">Регистрация</a></button>
+            <button type="button" class="btn btn-primary loginNext"><a href="./emailLogin.html">Вход</a></button>
+        </div>
+    </main>
 </body>
 </html>

@@ -1,0 +1,638 @@
+/* profile.css - Улучшенный дизайн */
+
+body {
+    /* Добавим небольшой отступ снизу, чтобы контент не прилипал к футеру */
+    padding-bottom: 80px; /* Высота футера + запас */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+main.container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-container {
+    background-color: #16191d; /* Слегка изменим фон для контраста с #1c1f26 */
+    padding: 25px;
+    border-radius: 15px; /* Чуть больше скругление */
+    margin: 25px auto 0;
+    color: #c5cdd8; /* Немного светлее основной текст */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Добавим легкую тень */
+    border: 1px solid rgba(255, 255, 255, 0.05); /* Тонкая граница */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавные переходы */
+    width: 100%;
+    max-width: 700px;
+}
+
+.profile-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.profile-header {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.profile-avatar:hover {
+    transform: scale(1.05);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.profile-header-info {
+    flex-grow: 1; /* Позволим блоку информации занять доступное место */
+}
+
+.profile-header-info h2 {
+    margin-top: 5px; /* Небольшой отступ сверху */
+    margin-bottom: 12px; /* Увеличим отступ снизу */
+    color: #ffffff;
+    font-size: 1.8em; /* Крупнее имя пользователя */
+    font-weight: 700;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.profile-header-info h2 .aBitGray {
+    font-size: 0.7em;
+    font-weight: 400;
+    margin-left: 8px; /* Увеличим отступ */
+    color: #aab3c3; /* Цвет для дополнительной информации */
+}
+
+.profile-header-info p {
+    margin: 8px 0; /* Увеличим отступы между строками */
+    font-size: 1em; /* Чуть крупнее доп. инфо */
+    color: #aab3c3; /* Слегка изменим цвет */
+    display: flex; /* Для выравнивания иконки статуса */
+    align-items: center;
+}
+
+/* Стили для статуса (уточненные) */
+.profile-header-info .status-online,
+.profile-header-info .status-offline,
+.profile-header-info .status-away {
+    font-weight: 500;
+    margin-left: 8px; /* Отступ для текста статуса */
+    display: inline-flex;
+    align-items: center;
+}
+
+.status-online { 
+    color: #28a745; 
+}
+.status-online::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: #28a745;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.status-offline { 
+    color: #dc3545; 
+}
+.status-offline::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: #dc3545;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.status-away { 
+    color: #ffc107; 
+}
+.status-away::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: #ffc107;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.edit-profile-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 8px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.edit-profile-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.edit-profile-button i {
+    font-size: 1.1em;
+}
+
+.profile-section {
+    margin-bottom: 30px; /* Увеличим отступ между секциями */
+    padding-bottom: 25px;
+    border-bottom: 1px solid #2a2e37;
+    transition: background-color 0.3s ease;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.profile-section:hover {
+    background-color: rgba(255, 255, 255, 0.03); /* Легкий фон при наведении */
+}
+
+.profile-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 35px; /* Больший отступ перед кнопкой выхода */
+}
+
+.profile-section h3 {
+    color: #e0e5eb; /* Светлее заголовки секций */
+    margin-bottom: 15px; /* Больше отступ снизу */
+    font-size: 1.3em; /* Крупнее заголовки секций */
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.profile-section h3 i {
+    margin-right: 10px;
+    color: #1a80e6;
+    font-size: 1.2em; /* Чуть крупнее иконки заголовков */
+}
+
+.profile-section p,
+.profile-section ul {
+    margin-left: 35px; /* Увеличим отступ для контента */
+    line-height: 1.7; /* Увеличим межстрочный интервал */
+    color: #b0b8c4; /* Основной цвет текста в секциях */
+}
+
+.profile-section p strong {
+    color: #d1d9e4; /* Выделим жирный текст */
+    margin-right: 8px;
+    font-weight: 600;
+}
+
+.game-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 15px;
+}
+
+.game-list li {
+    margin-bottom: 10px;
+    padding-left: 25px;
+    position: relative;
+    font-size: 0.95em;
+    display: flex;
+    align-items: center;
+}
+
+.game-list li::before {
+    content: '\F618'; /* Иконка контроллера из Bootstrap Icons */
+    font-family: 'bootstrap-icons';
+    color: #1a80e6;
+    font-size: 14px;
+    position: absolute;
+    left: 0;
+    top: 3px;
+}
+
+.game-list.small li {
+    font-size: 0.9em;
+    color: #9aa3b3;
+    margin-bottom: 8px;
+}
+
+.game-list.small li::before {
+    font-size: 12px;
+    top: 2px;
+}
+
+.logout-button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 12px 20px; /* Увеличим размер кнопки */
+    font-size: 1.1em;
+    font-weight: 500;
+    border-radius: 8px;
+    background: linear-gradient(to right, #ff5f6d, #ffc371);
+    border: none;
+    color: white;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logout-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 95, 109, 0.4);
+}
+
+.logout-button:active {
+    transform: translateY(0);
+}
+
+.logout-button::before {
+    content: '\F62D'; /* Иконка выхода из Bootstrap Icons */
+    font-family: 'bootstrap-icons';
+    margin-right: 8px;
+    font-size: 1.1em;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .profile-container {
+        width: 100%;
+        margin: 0;
+        padding: 15px;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    main.container {
+        padding: 0;
+        margin: 0;
+        max-width: 100%;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 15px;
+        padding-top: 60px; /* Место для кнопки редактирования */
+    }
+
+    .profile-avatar {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+
+    .profile-info {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .edit-profile-button {
+        top: 15px;
+        right: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-container {
+        padding: 10px;
+    }
+
+    .profile-section {
+        padding: 15px 10px;
+        margin-bottom: 10px;
+    }
+
+    .profile-avatar {
+        width: 100px;
+        height: 100px;
+    }
+
+    .profile-info h1 {
+        font-size: 1.5em;
+    }
+
+    .edit-profile-button {
+        padding: 6px 12px;
+        font-size: 0.85em;
+    }
+}
+
+/* Добавляем стили для сверхмалых экранов */
+@media (max-width: 360px) {
+    .profile-container {
+        padding: 10px;
+        margin: 5px;
+        border-radius: 8px;
+    }
+    
+    .profile-header {
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+        gap: 10px;
+    }
+    
+    .profile-avatar {
+        width: 60px;
+        height: 60px;
+        border-width: 2px;
+    }
+    
+    .profile-header-info h2 {
+        font-size: 1.2em;
+    }
+    
+    .profile-header-info p {
+        font-size: 0.85em;
+        margin: 4px 0;
+    }
+    
+    .profile-section {
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+    
+    .profile-section h3 {
+        font-size: 1.1em;
+        margin-bottom: 8px;
+    }
+    
+    .profile-section p,
+    .profile-section ul {
+        margin-left: 5px;
+        font-size: 0.85em;
+        line-height: 1.4;
+    }
+    
+    .game-list li {
+        margin-bottom: 5px;
+        padding-left: 20px;
+    }
+    
+    .logout-button {
+        padding: 8px 12px;
+        font-size: 0.9em;
+        margin-top: 15px;
+    }
+}
+
+/* Стили для окна редактирования профиля */
+.edit-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-y: auto;
+    z-index: 1100;
+    padding: 20px;
+}
+
+.edit-modal.opened {
+    display: flex;
+}
+
+.edit-modal-content {
+    background-color: #16191d;
+    border-radius: 15px;
+    padding: 25px;
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.edit-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.edit-modal-header h2 {
+    color: #ffffff;
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.edit-modal-close {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.edit-modal-close:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.edit-modal-close i {
+    color: white;
+    font-size: 20px;
+}
+
+.edit-form-group {
+    margin-bottom: 20px;
+}
+
+.edit-form-group label {
+    display: block;
+    color: #c5cdd8;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+}
+
+.edit-form-group input,
+.edit-form-group textarea,
+.edit-form-group select {
+    width: 100%;
+    padding: 10px 12px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 0.95em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.edit-form-group input:focus,
+.edit-form-group textarea:focus,
+.edit-form-group select:focus {
+    border-color: #1a80e6;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(26, 128, 230, 0.2);
+}
+
+.edit-form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.edit-form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    padding-right: 35px;
+}
+
+.edit-form-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.edit-form-save,
+.edit-form-cancel {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    border: none;
+}
+
+.edit-form-save {
+    background: linear-gradient(to right, #1a80e6, #2575fc);
+    color: white;
+}
+
+.edit-form-cancel {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.edit-form-save:hover,
+.edit-form-cancel:hover {
+    transform: translateY(-2px);
+}
+
+.edit-form-save:hover {
+    box-shadow: 0 5px 15px rgba(26, 128, 230, 0.4);
+}
+
+/* Адаптивность для окна редактирования */
+@media (max-width: 480px) {
+    .edit-modal {
+        padding: 10px;
+    }
+
+    .edit-modal-content {
+        padding: 15px;
+        margin: 10px;
+    }
+
+    .edit-form-group {
+        margin-bottom: 15px;
+    }
+
+    .edit-form-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 360px) {
+    .edit-modal-content {
+        padding: 10px;
+        margin: 5px;
+    }
+
+    .edit-modal-header h2 {
+        font-size: 1.2em;
+    }
+
+    .edit-form-group label {
+        font-size: 0.85em;
+    }
+
+    .edit-form-group input,
+    .edit-form-group textarea,
+    .edit-form-group select {
+        padding: 8px 10px;
+        font-size: 0.9em;
+    }
+}
+
+/* Анимации для плавного появления элементов */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.profile-container {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.profile-section {
+    animation: fadeIn 0.5s ease-out;
+    animation-fill-mode: both;
+}
+
+/* Добавляем задержку для каждой секции */
+.profile-section:nth-child(1) { animation-delay: 0.1s; }
+.profile-section:nth-child(2) { animation-delay: 0.2s; }
+.profile-section:nth-child(3) { animation-delay: 0.3s; }
+.profile-section:nth-child(4) { animation-delay: 0.4s; }
+.profile-section:nth-child(5) { animation-delay: 0.5s; }
+.profile-section:nth-child(6) { animation-delay: 0.6s; }
+.profile-section:nth-child(7) { animation-delay: 0.7s; }
+.profile-section:nth-child(8) { animation-delay: 0.8s; }

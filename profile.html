@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./profile.css" />
+    <title>GameSwipe - Профиль</title>
+</head>
+<body>
+    <main class="container" id="main">
+        <p>Загрузка профиля...</p>
+    </main>
+
+    <!-- Окно редактирования профиля -->
+    <div class="edit-modal">
+        <div class="edit-modal-content">
+            <div class="edit-modal-header">
+                <h2>Редактирование профиля</h2>
+                <button class="edit-modal-close"><i class="bi bi-x"></i></button>
+            </div>
+            <form id="editProfileForm">
+                <div class="edit-form-group">
+                    <label for="editRealName">Настоящее имя</label>
+                    <input type="text" id="editRealName" name="realName" placeholder="Ваше настоящее имя">
+                </div>
+                
+                <div class="edit-form-group">
+                    <label for="editAge">Возраст</label>
+                    <input type="number" id="editAge" name="age" min="1" max="120" placeholder="Ваш возраст">
+                </div>
+                
+                <div class="edit-form-group">
+                    <label for="editLocation">Город</label>
+                    <input type="text" id="editLocation" name="location" placeholder="Ваше местоположение">
+                </div>
+                
+                <div class="edit-form-group">
+                    <label for="editDescription">О себе</label>
+                    <textarea id="editDescription" name="description" placeholder="Расскажите о себе"></textarea>
+                </div>
+                
+                <div class="edit-form-group">
+                    <label for="editLanguages">Языки (через запятую)</label>
+                    <input type="text" id="editLanguages" name="languages" placeholder="Например: Русский, English">
+                </div>
+                
+                <div class="edit-form-group">
+                    <label for="editPreferredGenres">Любимые жанры (через запятую)</label>
+                    <input type="text" id="editPreferredGenres" name="preferredGenres" placeholder="Например: FPS, RPG, Strategy">
+                </div>
+                
+                <div class="edit-form-group">
+                    <label for="editPreferredRole">Предпочитаемая роль</label>
+                    <input type="text" id="editPreferredRole" name="preferredRole" placeholder="Например: Снайпер, Танк, Саппорт">
+                </div>
+                
+                <div class="edit-form-group">
+                    <label for="editSkillLevel">Уровень навыков</label>
+                    <select id="editSkillLevel" name="skillLevel">
+                        <option value="">Выберите уровень</option>
+                        <option value="низкий">Низкий</option>
+                        <option value="средний">Средний</option>
+                        <option value="высокий">Высокий</option>
+                    </select>
+                </div>
+                
+                <div class="edit-form-group">
+                    <label for="editScheduleWeekdays">Расписание (будни)</label>
+                    <input type="text" id="editScheduleWeekdays" name="scheduleWeekdays" placeholder="Например: 18:00-23:00">
+                </div>
+                
+                <div class="edit-form-group">
+                    <label for="editScheduleWeekends">Расписание (выходные)</label>
+                    <input type="text" id="editScheduleWeekends" name="scheduleWeekends" placeholder="Например: 14:00-02:00">
+                </div>
+                
+                <div class="edit-form-group">
+                    <label for="editDiscordTag">Discord Tag</label>
+                    <input type="text" id="editDiscordTag" name="discordTag" placeholder="Например: Username#1234">
+                </div>
+                
+                <div class="edit-form-buttons">
+                    <button type="button" class="edit-form-cancel">Отмена</button>
+                    <button type="submit" class="edit-form-save">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+      <nav class="footer-nav">
+        <a href="./index.html" class="nav-item"><i class="bi bi-search"></i></a>
+        <a href="./likes.html" class="nav-item"><i class="bi bi-heart"></i></a>
+        <a href="./notifications.html" class="nav-item"><i class="bi bi-bell"></i></a>
+        <a href="./profile.html" class="nav-item active"><i class="bi bi-person"></i></a>
+      </nav>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script type="module" src="./profile.js"></script>
+</body>
+</html>
