@@ -1,166 +1,330 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
 
 body {
-  background-color: black;
-  color: white;
-  font-family: 'Inter', sans-serif; /* Убедитесь, что шрифт применяется ко всему телу */
+  background: linear-gradient(135deg, #101216 0%, #0a0b0d 100%); /* Темный градиент */
+  color: #e0e5eb; /* Основной светлый цвет текста */
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex; /* Используем flex для центрирования */
+  flex-direction: column; /* Основная ось - вертикальная */
+  align-items: center; /* Центрируем по горизонтали */
+  justify-content: center; /* Центрируем по вертикали */
 }
-li,
-ul {
+
+li, ul {
   list-style: none;
+  padding: 0;
+  margin: 0;
 }
+
+/* Стили для header (кнопка крестик), если он используется */
 header {
-  position: static;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 16px 16px 8px 16px;
-
-  flex: none;
-  order: 0;
-  flex-grow: 1;
-  margin: 0px 0px;
-  background-color: rgb(0, 0, 0);
+  position: absolute; /* Абсолютное позиционирование */
+  top: 15px;
+  left: 15px;
+  /* background-color: transparent; */ /* Убрал стили, если он не нужен */
 }
-
 .close {
-  background-color: transparent;
-  border: 0;
-  font-size: 40px; /* Увеличен размер шрифта для кнопки закрытия */
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  font-size: 24px; /* Уменьшим */
   color: white;
-  transition: transform, 0.5s;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 .close:hover {
-  transform: scale(1.5);
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
 }
 
+/* Основной контейнер для контента на страницах входа/регистрации */
 main {
+  width: 100%;
+  max-width: 450px; /* Ограничиваем ширину для лучшего вида */
   padding-top: 10px;
   text-align: center;
 }
 
-.LogInList {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  margin-top: 30px; /* Оставляем */
-  padding: 0; /* Убираем padding */
-}
-
-.loginItemText {
-    color: rgb(158, 171, 184);
-    font-family: Inter;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 21px;
-    letter-spacing: 0px;
-    text-align: center;
-}
-.loginItemHead {
-    color: rgb(255, 255, 255);
-    font-family: Inter;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-    letter-spacing: 0px;
-    text-align: center;
-}
-
+/* Общие стили заголовков */
 .LogInHeading {
-    color: rgb(255, 255, 255);
-    font-family: Inter;
-    font-size: 22px;
+    color: #ffffff;
+    font-family: Inter, sans-serif;
+    font-size: 1.8em; /* Крупнее */
     font-weight: 700;
-    line-height: 28px;
-    letter-spacing: 0px;
-    text-align: center;
+    line-height: 1.3;
+    margin-bottom: 10px;
+    display: flex; /* Для иконки Steam */
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Пробел между текстом и иконкой */
 }
 
 .LogInMoreInfo {
-    color: rgb(255, 255, 255);
-    font-family: Inter;
-    font-size: 16px;
+    color: #aab3c3; /* Мягче цвет */
+    font-family: Inter, sans-serif;
+    font-size: 1em;
     font-weight: 400;
-    line-height: 24px;
-    letter-spacing: 0px;
-    text-align: center;
+    line-height: 1.5;
+    margin-bottom: 30px; /* Больше отступ снизу */
 }
 
-.btn-primary {
-    border-radius: 12px;
-    border: 0;
-    background: rgb(26, 128, 230);
+/* Стили для блока с информацией Steam (login.html) */
+.LogInList {
+  display: flex;
+  flex-direction: column; /* Вертикально по умолчанию */
+  gap: 25px; /* Увеличим расстояние */
+  margin-top: 30px;
+  margin-bottom: 40px; /* Больше отступ до кнопок */
+  padding: 0;
 }
-.btn-secondary {
-    border-radius: 12px;
-    border: 0;
-    background: rgb(41, 48, 56);
-}
+
 .loginitem {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin: 0; /* Убираем возможные отступы */
-    padding: 0; /* Убираем padding */
+    background-color: rgba(255, 255, 255, 0.03); /* Легкий фон */
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 .LoginImtemImg {
     display: block;
-    margin: 0 auto;
+    margin-bottom: 15px; /* Отступ под иконкой */
+    width: 50px; /* Фиксированный размер иконок */
+    height: 50px;
+}
+.loginItemHead {
+    color: #e0e5eb;
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+.loginItemText {
+    color: #8f9aab; /* Еще мягче цвет */
+    font-size: 0.9em;
+    line-height: 1.5;
 }
 
-.steamICON{
-  border-radius: 100%;
-  width: 20px;
-}
 
-
-
+/* Общие стили для loginBox (формы) */
 .loginBox {
-  margin: 20px auto; /* Центрирование формы */
-  padding: 20px; /* Внутренние отступы */
-  background-color: rgba(255, 255, 255, 0.1); /* Полупрозрачный фон */
-  border-radius: 10px; /* Скругленные углы */
-  max-width: 400px; /* Максимальная ширина формы */
+  margin: 20px auto;
+  padding: 30px; /* Увеличим отступы */
+  background-color: #16191d; /* Фон чуть светлее body */
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: left; /* Выравнивание текста в форме по левому краю */
 }
 
 .form-group {
-  margin-bottom: 15px; /* Отступ между полями */
+  margin-bottom: 25px; /* Увеличим отступ */
 }
 
 label {
-  display: block; /* Отображение меток как блочных элементов */
-  margin-bottom: 5px; /* Отступ снизу для меток */
-  color: white; /* Цвет текста меток */
+  display: block;
+  margin-bottom: 8px;
+  color: #c5cdd8;
+  font-size: 0.9em;
+  font-weight: 500;
 }
 
-input {
-  width: 100%; /* Ширина полей ввода */
-  padding: 10px; /* Внутренние отступы */
-  border: 1px solid #ccc; /* Цвет границы */
-  border-radius: 5px; /* Скругленные углы */
-  background-color: rgba(255, 255, 255, 0.2); /* Полупрозрачный фон для инпутов */
-  color: white; /* Цвет текста в инпутах */
-  font-size: 16px; /* Размер шрифта */
-  transition: border-color 0.3s; /* Плавный переход цвета границы */
+/* Стили полей ввода (из прошлого ответа, актуальны) */
+input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="email"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #444;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    box-sizing: border-box;
+}
+input:focus, textarea:focus, select:focus {
+    border-color: #1a80e6;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(26, 128, 230, 0.2);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+/* Добавим стиль для неактивных полей */
+input:disabled, textarea:disabled, select:disabled {
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 
-input:focus {
-  border-color: rgb(26, 128, 230); /* Цвет границы при фокусе */
-  outline: none; /* Убираем стандартный контур */
-  background-color: rgba(255, 255, 255, 0.3); /* Изменение фона при фокусе */
+
+/* Кнопки */
+.btn { /* Общие стили кнопок */
+    display: inline-block; /* Для корректного применения padding/margin */
+    padding: 12px 25px; /* Увеличим паддинг */
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    border: none; /* Убираем стандартную рамку */
+    text-decoration: none; /* Для ссылок-кнопок */
+    width: 100%; /* Кнопки на всю ширину */
+    box-sizing: border-box;
+}
+.btn:disabled {
+     opacity: 0.5;
+     cursor: not-allowed;
+     box-shadow: none;
+     transform: none;
 }
 
-.loginButtons a {
-    color: white; /* Цвет текста */
-    text-decoration: none; /* Убираем подчеркивание */
+.btn-primary {
+    background: rgb(26, 128, 230);
+    color: white;
+    box-shadow: 0 4px 10px rgba(26, 128, 230, 0.2);
+}
+.btn-primary:hover:not(:disabled) {
+    background: rgb(20, 108, 190); /* Чуть темнее при наведении */
+    box-shadow: 0 6px 12px rgba(26, 128, 230, 0.3);
+    transform: translateY(-1px);
+}
+.btn-primary:active:not(:disabled) {
+    transform: translateY(0px);
+    background: rgb(18, 98, 170);
+    box-shadow: 0 2px 5px rgba(26, 128, 230, 0.2);
 }
 
-.loginButtons a:hover {
-    text-decoration: underline; /* Подчеркивание при наведении */
+.btn-secondary {
+    background: rgb(41, 48, 56);
+    color: #e0e5eb;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.btn-secondary:hover:not(:disabled) {
+    background: rgb(51, 58, 66);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+.btn-secondary:active:not(:disabled) {
+    transform: translateY(0px);
+    background: rgb(35, 42, 50);
 }
 
-/* */
+
+/* Стили для кнопок выбора в login.html и EmailLoginOrReg.html */
+.loginButtons, .choiceButtons { /* Добавим класс .choiceButtons для EmailLoginOrReg */
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column; /* Кнопки друг под другом */
+    gap: 15px; /* Расстояние между кнопками */
+    width: 100%;
+    max-width: 350px; /* Ограничим ширину блока кнопок */
+    margin-left: auto;
+    margin-right: auto;
+}
+.loginButtons a, .choiceButtons a { /* Ссылки внутри кнопок */
+    color: inherit; /* Наследуем цвет от кнопки */
+    text-decoration: none;
+    display: block; /* Чтобы ссылка занимала всю кнопку */
+    width: 100%;
+    height: 100%;
+}
+
+/* Ссылка под формой регистрации/логина */
+.form-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #aab3c3;
+    font-size: 0.9em;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.form-link:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+
+/* Steam Icon */
+.steamICON{
+  border-radius: 50%; /* Круглая */
+  width: 24px; /* Чуть крупнее */
+  height: 24px;
+  vertical-align: middle; /* Выравнивание по вертикали */
+}
+
+/* Стили сообщений формы (из прошлого ответа, актуальны) */
+.form-message { /* ... стили из style.css ... */ }
+.form-message.success { /* ... */ }
+.form-message.error { /* ... */ }
+.form-message.info { /* ... */ }
+
+
+/* Адаптивность */
+@media (min-width: 600px) {
+    /* На больших экранах можно вернуть горизонтальное расположение кнопок */
+    .loginButtons, .choiceButtons {
+        flex-direction: row;
+    }
+     /* Вернуть горизонтальное расположение для Steam Info */
+     .LogInList {
+         flex-direction: row;
+         justify-content: center;
+         flex-wrap: wrap; /* Перенос, если не влезает */
+     }
+     .loginitem {
+         flex-basis: calc(33% - 20px); /* Примерно по 3 в ряд */
+         min-width: 180px;
+     }
+}
+
+/* Контейнер для центрирования кнопки-ссылки под формой */
+.centered-link-button-container {
+    text-align: center; /* Центрируем инлайновые/инлайн-блочные элементы */
+    margin-top: 30px; /* Отступ сверху */
+}
+
+/* Стили для кнопки-ссылки "Регистрация" */
+.register-link-btn {
+    display: inline-block; /* Чтобы не занимала всю ширину */
+    width: auto; /* Ширина по содержимому */
+    max-width: 200px; /* Ограничим максимальную ширину */
+    padding: 10px 25px; /* Уменьшим вертикальный паддинг */
+    color: white !important; /* Белый цвет текста, !important на случай конфликтов */
+    text-decoration: none !important; /* Убираем подчеркивание */
+}
+
+/* Дополнительно: Убедимся, что general .btn-secondary не мешает */
+.btn-secondary.register-link-btn {
+    /* Здесь можно добавить специфичные стили, если нужно */
+    /* Например, другой фон или размер шрифта */
+    font-size: 0.95em;
+}
+
+/* Стили для текстовой ссылки под формой (если выбран первый вариант HTML) */
+.form-link {
+    display: block;
+    text-align: center;
+    margin-top: 25px; /* Увеличим отступ */
+    color: #aab3c3;
+    font-size: 0.9em;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.form-link:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Регистрация пользователя</title>
+    <link rel="stylesheet" href="./main.css">
     <style>
         body {
             background-color: #000;
@@ -98,8 +99,8 @@
 <body>
     <main>
         <h2 class="LogInHeading">Регистрация пользователя</h2>
-        <div class="loginBox">
-            <form id="registrationForm" action="your_registration_endpoint" method="POST">
+        <div class="loginBox registrationBox">
+            <form id="registrationForm">
                 <!-- Основні дані -->
                 <div class="form-group">
                     <label for="username">Имя пользователя:</label>
@@ -208,13 +209,78 @@
                     <input type="text" id="discordTag" name="discordTag" placeholder="Например, CyberNinja#4523" class="input-field">
                 </div>
 
+                <div id="registrationMessage" class="form-message"></div>
+
                 <div class="form-group">
-                    <button type="submit" class="btn">Зарегистрироваться</button>
+                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                    <a href="emailLogin.html" class="form-link">Уже есть аккаунт? Войти</a>
                 </div>
             </form>
         </div>
     </main>
 
-    <script src="./login.js"></script>
+    <script src="../auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const registrationForm = document.getElementById('registrationForm');
+            const submitButton = registrationForm?.querySelector('button[type="submit"]');
+
+            if (registrationForm && submitButton) {
+                registrationForm.addEventListener('submit', async function(event) {
+                    event.preventDefault();
+                    submitButton.disabled = true;
+
+                    // --- Ожидание готовности Auth ---
+                    let waitCycles = 0;
+                    while (window.isAuthReady !== true && waitCycles < 60) {
+                        console.log("Ждем Auth для регистрации...");
+                         await new Promise(resolve => setTimeout(resolve, 100));
+                         waitCycles++;
+                    }
+                    if (window.isAuthReady !== true) {
+                        Toastify({ text: "Ошибка инициализации. Попробуйте позже.", duration: 5000, backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)", gravity: "top", position: "center"}).showToast();
+                        submitButton.disabled = false;
+                        return;
+                    }
+
+                    // --- Сбор данных (упрощенный, требует доработки!) ---
+                    const formData = new FormData(registrationForm);
+                    const userData = {};
+                     formData.forEach((value, key) => { if (value) userData[key] = value; });
+                     // !!! Нужно доработать сбор массивов/объектов (topGames и т.д.) !!!
+                     console.log("Собранные данные для регистрации:", userData);
+
+
+                    // --- Вызов регистрации ---
+                    const result = window.register(userData);
+
+                    // --- Обработка результата ---
+                    if (result.success) {
+                        Toastify({
+                            text: result.message + " Перенаправление...",
+                            duration: 2500,
+                            gravity: "bottom",
+                            position: "center",
+                            backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+                            callback: function() {
+                                window.location.href = '../index.html';
+                            }
+                        }).showToast();
+                         // Кнопка остается заблокированной
+                    } else {
+                        Toastify({
+                            text: result.message,
+                            duration: 4000,
+                            gravity: "top",
+                            position: "center",
+                            backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)",
+                             close: true
+                        }).showToast();
+                        submitButton.disabled = false;
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

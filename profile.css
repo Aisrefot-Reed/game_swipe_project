@@ -1,0 +1,199 @@
+/* profile.css - Refined Styles */
+
+body {
+    /* Добавим небольшой отступ снизу, чтобы контент не прилипал к футеру */
+    padding-bottom: 80px; /* Высота футера + запас */
+}
+
+.profile-container {
+    background-color: #16191d; /* Слегка изменим фон для контраста с #1c1f26 */
+    padding: 25px;
+    border-radius: 15px; /* Чуть больше скругление */
+    margin-top: 25px;
+    color: #c5cdd8; /* Немного светлее основной текст */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Добавим легкую тень */
+}
+
+.profile-header {
+    display: flex;
+    align-items: flex-start; /* Выровняем по верху, если текст длинный */
+    margin-bottom: 30px;
+    border-bottom: 1px solid #3a414b; /* Более заметный разделитель */
+    padding-bottom: 25px;
+    position: relative;
+    gap: 20px; /* Добавим промежуток между аватаром и инфо */
+}
+
+.profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #3a414b; /* Граница в цвет разделителя */
+    flex-shrink: 0; /* Предотвратим сжатие аватара */
+}
+
+.profile-header-info {
+    flex-grow: 1; /* Позволим блоку информации занять доступное место */
+}
+
+.profile-header-info h2 {
+    margin-top: 5px; /* Небольшой отступ сверху */
+    margin-bottom: 8px;
+    color: #ffffff;
+    font-size: 1.6em; /* Крупнее имя пользователя */
+    font-weight: 700;
+    line-height: 1.2;
+}
+.profile-header-info h2 .aBitGray {
+     font-size: 0.7em;
+     font-weight: 400;
+     margin-left: 5px; /* Небольшой отступ */
+}
+
+.profile-header-info p {
+    margin: 5px 0;
+    font-size: 0.95em; /* Чуть крупнее доп. инфо */
+    color: #aab3c3; /* Слегка изменим цвет */
+    display: flex; /* Для выравнивания иконки статуса, если она будет */
+    align-items: center;
+}
+
+/* Стили для статуса (уточненные) */
+.profile-header-info .status-online,
+.profile-header-info .status-offline,
+.profile-header-info .status-away {
+    font-weight: 500;
+    margin-left: 5px; /* Отступ для текста статуса */
+}
+.status-online { color: #28a745; }
+.status-offline { color: #dc3545; }
+.status-away { color: #ffc107; }
+
+
+.edit-profile-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #c5cdd8;
+    border-radius: 8px;
+    padding: 5px 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.edit-profile-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+}
+.edit-profile-button i {
+    font-size: 16px; /* Размер иконки редактирования */
+}
+
+
+.profile-section {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #2a2e37;
+}
+.profile-section:last-of-type {
+    border-bottom: none;
+     margin-bottom: 35px; /* Больший отступ перед кнопкой выхода */
+}
+
+.profile-section h3 {
+    color: #e0e5eb; /* Светлее заголовки секций */
+    margin-bottom: 15px; /* Больше отступ снизу */
+    font-size: 1.2em; /* Крупнее заголовки секций */
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+.profile-section h3 i {
+    margin-right: 10px;
+    color: #1a80e6;
+    font-size: 1.1em; /* Чуть крупнее иконки заголовков */
+}
+
+.profile-section p,
+.profile-section ul {
+    margin-left: 35px; /* Увеличим отступ для контента */
+    line-height: 1.7; /* Увеличим межстрочный интервал */
+    color: #b0b8c4; /* Основной цвет текста в секциях */
+}
+.profile-section p strong {
+    color: #d1d9e4; /* Выделим жирный текст */
+    margin-right: 5px;
+}
+
+.game-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 10px;
+}
+.game-list li {
+    margin-bottom: 8px;
+    padding-left: 20px;
+    position: relative;
+    font-size: 0.95em;
+}
+.game-list li::before {
+    content: ''; /* Убираем точку, заменим на иконку или другой стиль */
+    position: absolute;
+    left: 0;
+    top: 5px; /* Выровняем по вертикали */
+    width: 8px;
+    height: 8px;
+    background-color: #1a80e6;
+    border-radius: 50%;
+    /* Можно использовать иконку:
+    content: '\F618'; /* Пример иконки из Bootstrap Icons (controller) */
+    /* font-family: 'bootstrap-icons'; */
+    /* color: #1a80e6; */
+    /* font-size: 12px; */
+}
+
+.game-list.small li {
+     font-size: 0.9em;
+     color: #9aa3b3;
+}
+.game-list.small li::before {
+    top: 4px;
+    width: 6px;
+    height: 6px;
+}
+
+.logout-button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 10px 15px; /* Сделаем кнопку чуть повыше */
+    font-size: 1em;
+    font-weight: 500;
+}
+
+/* Адаптивность (простой пример для заголовка) */
+@media (max-width: 480px) {
+    .profile-header {
+        flex-direction: column; /* Аватар над информацией */
+        align-items: center; /* Центрируем элементы */
+        text-align: center;
+    }
+    .profile-avatar {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    .profile-header-info {
+         width: 100%; /* Занять всю ширину */
+    }
+    .edit-profile-button {
+        top: 10px;
+        right: 10px;
+    }
+     .profile-section p,
+    .profile-section ul {
+        margin-left: 5px; /* Уменьшим отступ на маленьких экранах */
+    }
+     .profile-section h3 i {
+        margin-right: 5px; /* Уменьшим отступ иконки */
+    }
+}

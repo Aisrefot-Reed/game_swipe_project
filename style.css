@@ -26,28 +26,39 @@ main {
 
 .userName {
   color: rgb(255, 255, 255);
-  font-family: Inter;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 23px;
-  letter-spacing: 0px;
-  text-align: left;
+  font-family: "Inter", sans-serif; /* Явно указываем шрифт */
+  font-size: 1.15em; /* Немного крупнее */
+  font-weight: 600; /* Полужирный */
+  line-height: 1.3;
+  margin-bottom: 4px; /* Уменьшим отступ снизу */
+  letter-spacing: 0.5px; /* Небольшой разрядка */
 }
 .userAvatar {
   border-radius: 12px;
-  margin-bottom: 12px;
-  max-height: 350px;
-  width: auto;
+  margin-bottom: 15px; /* Немного увеличим отступ */
+  /* Уберем max-height, чтобы изображение могло быть пропорциональным */
+  width: 100%; /* Займет всю ширину карточки */
+  height: auto; /* Автоматическая высота для сохранения пропорций */
+  max-height: 300px;
+  object-fit: cover; /* Масштабируем, чтобы заполнить, обрезая лишнее */
+  aspect-ratio: 1 / 1; /* Сделаем аву квадратной или можно 4/3 */
+  display: block; /* Убираем лишние отступы под картинкой */
 }
 .userCard {
-  border-radius: 12px;
-
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 16px; /* Чуть больше скругление */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Более мягкая тень */
   background: rgb(28, 33, 38);
   display: flex;
   flex-direction: column;
-  margin-top: 32px;
-  padding: 25px;
+  margin-top: 25px; /* Увеличим расстояние между карточками */
+  padding: 20px; /* Уменьшим внутренний отступ, т.к. аватар теперь 100% ширины */
+  border: 1px solid rgba(255, 255, 255, 0.05); /* Очень тонкая светлая граница */
+  overflow: hidden; /* Скрываем все, что выходит за пределы скругленных углов */
+  transition: transform 0.3s ease, box-shadow 0.35s ease; /* Плавные переходы */
+}
+.userCard:hover {
+  transform: translateY(-6px) scale(1.01); /* Более заметный подъем и легкое увеличение */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Более выраженная тень при наведении */
 }
 .btn-primary{
   border-radius: 12px;
@@ -57,6 +68,29 @@ background: rgb(26, 128, 230);
 .userLastLine{
   display: flex;
   justify-content: space-between;
+  align-items: center; /* Выравниваем статус и кнопку по вертикали */
+  margin-top: auto; /* Прижимаем эту строку к низу карточки */
+  padding-top: 10px; /* Небольшой отступ сверху */
+}
+
+.userLastLine .aBitGray { /* Статус в последней строке */
+   font-size: 0.85em;
+   text-transform: capitalize; /* Статус с большой буквы */
+}
+/* Стили статусов (если нужны отдельные цвета) */
+.userLastLine .status-online { color: #28a745; }
+.userLastLine .status-offline { color: #6c757d; } /* Сделаем оффлайн более серым */
+.userLastLine .status-away { color: #ffc107; }
+
+.userLastLine .btn-primary.like {
+    padding: 6px 12px; /* Уменьшим кнопку лайка */
+    font-size: 0.9em;
+    background: rgba(26, 128, 230, 0.8); /* Слегка прозрачный фон */
+    border: none;
+}
+.userLastLine .btn-primary.like:hover {
+     background: rgb(26, 128, 230); /* Непрозрачный при наведении */
+     box-shadow: 0 2px 5px rgba(26, 128, 230, 0.4);
 }
 
 .closed{
@@ -76,10 +110,16 @@ background: rgb(26, 128, 230);
     justify-content: center; /* Центрирование содержимого */
     align-items: center; /* Центрирование содержимого */
     z-index: 1000; /* Поверх остальных элементов */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0s linear 0.4s;
 }
 
 .modal.opened {
     display: flex; /* Показываем модалку */
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.4s ease;
 }
 
 .modalContent {
@@ -97,32 +137,45 @@ background: rgb(26, 128, 230);
     display: flex; /* Гибкое отображение для заголовка */
     justify-content: space-between; /* Распределение пространства между кнопками */
     align-items: center; /* Центрирование по вертикали */
-    position: relative; /* Относительное позиционирование для кнопок */
-    padding: 10px; /* Отступы вокруг заголовка */
+    position: static; /* Убираем relative, если он не нужен для других элементов */
+    padding: 0; /* Убираем паддинг, если он не нужен */
+    height: 50px; /* Зададим высоту шапке для позиционирования */
+    border-bottom: 1px solid #333; /* Добавим границу для ясности */
+    background-color: #1c1f26; /* Фон для шапки */
 }
 
 .close-button {
-    cursor: pointer; /* Указатель при наведении */
-    font-size: 30px; /* Размер иконки */
-    color: white; /* Цвет иконки */
-    background: none; /* Убираем фон */
-    border: none; /* Убираем границу */
-    padding: 10px; /* Внутренние отступы для увеличения кнопки */
+    position: absolute; /* Абсолютное позиционирование относительно .modal */
+    top: 0px; /* Отступ сверху */
+    left: 0px; /* Отступ слева */
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 10px 15px; /* Увеличим область клика */
+    z-index: 1010; /* Выше чем modalContent */
+    display: flex; /* Для центрирования иконки */
+    align-items: center;
+    justify-content: center;
+    height: 50px; /* Высота как у шапки */
+     width: 50px; /* Ширина для кликабельности */
+     border-radius: 0 0 10px 0; /* Скругление уголка */
+     transition: background-color 0.2s ease; /* Плавный переход фона */
+}
+.close-button:hover {
+     background-color: rgba(255, 255, 255, 0.1); /* Подсветка при наведении */
 }
 
 .bi-arrow-left-short {
-    position: fixed;
-    left: 10px; /* Убедитесь, что кнопка не слишком близко к краю */
-    top: 10px;
-    font-size: 50px;
-    color: white; /* Цвет иконки */
-    transition: font-size 0.3s, transform 0.3s; /* Плавный переход */
+    font-size: 36px; /* Фиксированный размер иконки */
+    color: white;
+     /* Убираем старые переходы и трансформации */
+     /* transition: font-size 0.3s, transform 0.3s; */
 }
-
-.bi-arrow-left-short:hover {
-    font-size: 60px; /* Увеличение размера при наведении */
-    transform: scale(1.1); /* Легкое увеличение */
-}
+ /* Убираем стили ховера для самой иконки, ховер теперь на кнопке */
+ /* .bi-arrow-left-short:hover {
+    font-size: 60px;
+    transform: scale(1.1);
+} */
 
 .bi-x {
     margin-left: 10px; /* Отступ слева для кнопки закрытия */
@@ -132,4 +185,178 @@ background: rgb(26, 128, 230);
     margin-top: 10px; /* Отступ сверху */
     color: white; /* Цвет текста */
     line-height: 1.5; /* Увеличение межстрочного интервала для лучшей читаемости */
+    opacity: 0;
+    animation: fadeIn 0.5s 0.2s ease-out forwards; /* Задержка 0.2s после открытия модалки */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Footer Styles */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #1c1f26; /* Темный фон как на картинке */
+    border-top: 1px solid #333; /* Тонкая граница сверху */
+    padding: 5px 0; /* Небольшой вертикальный отступ */
+    z-index: 999; /* Убедимся, что футер поверх основного контента */
+}
+
+.footer-nav {
+    display: flex;
+    justify-content: space-around; /* Равномерное распределение иконок */
+    align-items: center;
+    max-width: 500px; /* Ограничим максимальную ширину для больших экранов */
+    margin: 0 auto; /* Центрирование на больших экранах */
+}
+
+.nav-item {
+    color: #8a94a8; /* Серый цвет для неактивных иконок */
+    font-size: 24px; /* Размер иконок */
+    padding: 10px 15px; /* Отступы для удобства нажатия */
+    text-decoration: none;
+    position: relative; /* Для позиционирования индикатора */
+    transition: color 0.2s ease-in-out, transform 0.2s ease;
+}
+
+.nav-item:hover {
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.nav-item.active {
+    color: #ffffff; /* Белый для активной иконки */
+}
+
+/* Индикатор активной вкладки (синяя линия) */
+.nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 60%;
+    height: 3px;
+    background-color: #1a80e6;
+    border-radius: 2px;
+    transition: transform 0.3s ease-in-out;
+    transform-origin: center;
+}
+
+.nav-item.active::after {
+    transform: translateX(-50%) scaleX(1);
+}
+
+/* Styles for Form Messages */
+.form-message {
+    padding: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 0.9em;
+    display: none; /* Скрыто по умолчанию */
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+.form-message.success {
+    background-color: rgba(40, 167, 69, 0.2); /* Зеленый фон */
+    color: #28a745;
+    border: 1px solid rgba(40, 167, 69, 0.4);
+    display: block;
+    opacity: 1;
+}
+.form-message.error {
+    background-color: rgba(220, 53, 69, 0.15); /* Красный фон */
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    display: block;
+    opacity: 1;
+}
+.form-message.info {
+    background-color: rgba(23, 162, 184, 0.15); /* Сине-зеленый фон */
+    color: #17a2b8;
+    border: 1px solid rgba(23, 162, 184, 0.3);
+    display: block;
+    opacity: 1;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    border-left-color: #ffffff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 30px auto; /* Центрирование */
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Error Message Container */
+.error-message {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(220, 53, 69, 0.1);
+    border: 1px solid rgba(220, 53, 69, 0.3);
+    border-radius: 8px;
+    margin: 30px auto;
+    max-width: 400px;
+    color: #f8d7da; /* Светлый текст для темного фона ошибки */
+}
+.error-message p {
+    margin-bottom: 10px;
+}
+.error-message button {
+    margin-top: 10px;
+}
+
+/* General Button Transitions */
+.btn {
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out, box-shadow 0.2s ease;
+}
+.btn:hover {
+    filter: brightness(1.1); /* Немного ярче при наведении */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.btn:active {
+    transform: scale(0.98); /* Легкое нажатие */
+}
+
+/* 3. Дополнительные анимации (Пример: Плавное появление карточек) */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Этот класс нужно будет добавлять к .userCard с помощью JS при рендеринге,
+   возможно, с небольшой задержкой для каждой следующей карты для эффекта "волны" */
+.card-fade-in-up {
+  animation: fadeInUp 0.5s ease-out forwards;
+   opacity: 0; /* Начальное состояние для анимации */
+}
+
+/* Плавное появление контента в модалке */
+.modalBody {
+    /* ... */
+    opacity: 0;
+    animation: fadeIn 0.5s 0.2s ease-out forwards; /* Задержка 0.2s после открытия модалки */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

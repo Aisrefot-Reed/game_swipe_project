@@ -84,12 +84,38 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log("Текущий пользователь:", loggedInUser);
 
     let db;
+    const mainContainer = document.getElementById("main"); // Получаем контейнер main
     try {
+        // Показываем индикатор загрузки
+        if(mainContainer) mainContainer.innerHTML = '<div class="loading-spinner"></div><p style="text-align:center; margin-top: 10px;">Загрузка пользователей...</p>';
+
         const response = await fetch("./database.json");
+         if (!response.ok) { // Проверка статуса ответа
+             throw new Error(`Ошибка сети: ${response.status} ${response.statusText}`);
+         }
         db = await response.json();
+
+        // Очищаем индикатор загрузки перед рендерингом
+        if(mainContainer) mainContainer.innerHTML = '';
+
     } catch (error) {
         console.error("Ошибка загрузки JSON:", error);
-        return;
+        // Отображаем ошибку в UI через Toastify
+        if (mainContainer) {
+             mainContainer.innerHTML = ''; // Очищаем спиннер
+         }
+         Toastify({
+             text: `😕 Не удалось загрузить данные: ${error.message}. Попробуйте обновить страницу.`,
+             duration: -1, // Не закрывать автоматически
+             gravity: "top",
+             position: "center",
+             backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)",
+             close: true, // Позволить закрыть
+             // Можно добавить кнопку для перезагрузки, но это сложнее с Toastify
+             // onClick: function(){ location.reload(); } // Перезагрузка по клику на тост
+         }).showToast();
+
+        return; // Прерываем выполнение
     }
 
     const main = document.getElementById("main");
