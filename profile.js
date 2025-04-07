@@ -1,18 +1,20 @@
-// profile.js
-
 const formatNumber = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
-// Кэшируем часто используемые элементы DOM
 let mainContent = null;
 let authScriptLoaded = false;
 let editModal = null;
 
-// Функция для открытия модального окна редактирования
 function openEditModal(userData) {
     if (!editModal) {
         editModal = document.querySelector('.edit-modal');
     }
-    // Заполняем форму текущими данными пользователя
+    userCurrData
+
+    editModal.classList.add('opened');
+    document.body.style.overflow = 'hidden';
+}
+
+function userCurrData(){
     document.getElementById('editRealName').value = userData.realName || '';
     document.getElementById('editAge').value = userData.age || '';
     document.getElementById('editLocation').value = userData.location || '';
@@ -24,18 +26,14 @@ function openEditModal(userData) {
     document.getElementById('editScheduleWeekdays').value = userData.schedule?.weekdays?.join(', ') || '';
     document.getElementById('editScheduleWeekends').value = userData.schedule?.weekends?.join(', ') || '';
     document.getElementById('editDiscordTag').value = userData.discordTag || '';
-
-    editModal.classList.add('opened');
-    document.body.style.overflow = 'hidden'; // Запрещаем прокрутку фона
 }
 
-// Функция для закрытия модального окна
 function closeEditModal() {
     if (!editModal) {
         editModal = document.querySelector('.edit-modal');
     }
     editModal.classList.remove('opened');
-    document.body.style.overflow = ''; // Возвращаем прокрутку
+    document.body.style.overflow = '';
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -51,11 +49,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // Проверяем авторизацию и рендерим соответствующее содержимое
     const loggedInUser = localStorage.getItem('loggedInUser');
     await renderPageContent(loggedInUser, mainContent);
 
-    // Обработчик клика по кнопке редактирования
     if (editButton) {
         editButton.addEventListener('click', async () => {
             const loggedInUser = localStorage.getItem('loggedInUser');
@@ -87,7 +83,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // Обработчики закрытия модального окна
     if (closeButton) {
         closeButton.addEventListener('click', closeEditModal);
     }
@@ -95,14 +90,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         cancelButton.addEventListener('click', closeEditModal);
     }
 
-    // Обработчик отправки формы редактирования
     if (editForm) {
         editForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const formData = new FormData(editForm);
             const updatedData = {};
 
-            // Собираем данные из формы
             for (const [key, value] of formData.entries()) {
                 if (value) {
                     switch (key) {
@@ -123,8 +116,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             try {
-                // В реальном приложении здесь был бы запрос к серверу
-                // Сейчас мы работаем с localStorage
                 const users = JSON.parse(localStorage.getItem('appUsers') || '[]');
                 const loggedInUser = localStorage.getItem('loggedInUser');
                 const userIndex = users.findIndex(u => u.username === loggedInUser);
@@ -144,7 +135,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }).showToast();
 
                     closeEditModal();
-                    // Перезагружаем страницу для отображения обновленных данных
                     setTimeout(() => location.reload(), 1000);
                 }
             } catch (error) {
@@ -163,7 +153,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// Основная функция для рендеринга содержимого страницы
 async function renderPageContent(loggedInUser, container) {
     if (!loggedInUser) {
         renderUnauthorized(container);
@@ -188,14 +177,13 @@ async function renderPageContent(loggedInUser, container) {
     const currentUser = db.users.find(u => u.username === loggedInUser);
     if (!currentUser) {
         console.error(`Пользователь ${loggedInUser} не найден в database.json!`);
-        renderUnauthorized(container, true); // Показываем сообщение об ошибке
+        renderUnauthorized(container, true);
         return;
     }
 
     renderUserProfile(currentUser, container);
 }
 
-// Рендеринг для неавторизованного пользователя
 function renderUnauthorized(container, error = false) {
     container.innerHTML = `
         <div class="text-center mt-5">
@@ -205,7 +193,6 @@ function renderUnauthorized(container, error = false) {
     `;
 }
 
-// Простая форма логина прямо на странице
 function renderLoginForm(container) {
     container.innerHTML = `
         <div class="loginBox p-4 mx-auto" style="max-width: 400px;">
@@ -225,7 +212,6 @@ function renderLoginForm(container) {
         </div>
     `;
 
-    // Загружаем скрипт auth.js только если он еще не загружен
     if (!authScriptLoaded) {
         const authScript = document.createElement('script');
         authScript.src = './auth.js';
@@ -244,8 +230,7 @@ function renderLoginForm(container) {
         const submitButton = loginForm.querySelector('button[type="submit"]');
         submitButton.disabled = true;
 
-        // Ожидание готовности auth.js с таймаутом
-        const maxWaitTime = 5000; // 5 секунд максимум ожидания
+        const maxWaitTime = 5000;
         const startTime = Date.now();
         
         while (!window.isAuthReady && (Date.now() - startTime) < maxWaitTime) {
@@ -269,7 +254,7 @@ function renderLoginForm(container) {
         const result = window.login(username, password);
         if (result.success) {
             localStorage.setItem('loggedInUser', username);
-            await renderPageContent(username, container); // Перерендерим страницу
+            await renderPageContent(username, container);
             Toastify({
                 text: "Успешный вход!",
                 duration: 2000,
@@ -374,7 +359,6 @@ function renderUserProfile(user, container) {
     
     container.innerHTML = profileHTML;
 
-    // Добавляем обработчики событий после рендеринга
     const logoutButton = container.querySelector('.logout-button');
     if (logoutButton) {
         logoutButton.addEventListener('click', () => {
@@ -392,8 +376,7 @@ function renderUserProfile(user, container) {
                 }
             }).showToast();
 
-            // Обновляем содержимое страницы без редиректа
-            setTimeout(() => renderUnauthorized(container), 500); // Небольшая задержка для эффекта
+            setTimeout(() => renderUnauthorized(container), 500);
         });
     }
 

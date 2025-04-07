@@ -1,6 +1,5 @@
 const formatNumber = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
-// Определяем функции перед их использованием
 function openModal(user) {
     const oMain = document.querySelector("#main");
     const oModal = document.querySelector(".modal");
@@ -19,12 +18,10 @@ function openModal(user) {
         return;
     }
 
-    // Определяем класс статуса
     const statusClass = user.status === "online" ? "modalStatusOnline" : 
                         user.status === "offline" ? "modalStatusOffline" : 
                         "modalStatusAway";
     
-    // Форматируем статус для отображения
     const statusText = user.status === "online" ? "онлайн" : 
                       user.status === "offline" ? "офлайн" : 
                       "не в сети";
