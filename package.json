@@ -1,0 +1,25 @@
+{
+  "name": "game_swipe_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aisrefot-Reed/game_swipe_project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Aisrefot-Reed/game_swipe_project/issues"
+  },
+  "homepage": "https://github.com/Aisrefot-Reed/game_swipe_project#readme",
+  "dependencies": {
+    "bootstrap-icons": "^1.11.3",
+    "http-server": "^14.1.1"
+  }
+}

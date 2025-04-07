@@ -1,0 +1,246 @@
+{
+  "users": [
+    {
+      "id": "user1",
+      "username": "CyberNinja",
+      "realName": "Алексей",
+      "age": 25,
+      "emailUser": true,
+      "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUfXkFR4FpWi62-7YpoWh1nvgWkf_3DTwhPw&s",
+      "status": "online",
+      "description": "Ищу команду для киберспортивных турниров по CS2. Играю в роли снайпера. Свободен по вечерам в будни и в выходные.",
+      "location": "Москва",
+      "languages": ["русский", "английский"],
+      "preferredGenres": ["шутер", "киберспорт", "стратегия"],
+      "preferredRole": "снайпер",
+      "schedule": {
+        "weekdays": ["18:00-23:00"],
+        "weekends": ["14:00-02:00"]
+      },
+      "topGames": [
+        {
+          "name": "Counter-Strike 2",
+          "playtime": 3420
+        },
+        {
+          "name": "Dota 2",
+          "playtime": 1245
+        },
+        {
+          "name": "PUBG: BATTLEGROUNDS",
+          "playtime": 952
+        }
+      ],
+      "lookingFor": ["команда", "турниры", "регулярные игры"],
+      "skillLevel": "высокий",
+      "voiceChat": true,
+      "voiceChatPlatforms": ["Discord", "Steam Voice"],
+      "discordTag": "CyberNinja#4523",
+      "steam": {
+        "steamId": "76561198045727589",
+        "steamLevel": 42,
+        "accountCreated": "2012-03-18",
+        "lastOnline": "2025-03-14T09:23:45Z",
+        "totalPlaytime": 7842,
+        "recentlyPlayed": [
+          {
+            "name": "Counter-Strike 2",
+            "appId": 730,
+            "playtime": 3420,
+            "lastPlayed": "2025-03-13T22:12:10Z"
+          },
+          {
+            "name": "PUBG: BATTLEGROUNDS",
+            "appId": 578080,
+            "playtime": 952,
+            "lastPlayed": "2025-03-10T19:30:22Z"
+          },
+          {
+            "name": "Apex Legends",
+            "appId": 1172470,
+            "playtime": 412,
+            "lastPlayed": "2025-03-09T15:18:45Z"
+          }
+        ]
+      },
+      "password": "123"
+    },
+    {
+      "id": "user2",
+      "username": "PhantomHealer",
+      "realName": "Екатерина",
+      "age": 23,
+      "emailUser": false,
+      "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0qCreqkTZL0F0bF9kZctFE1XVFocO__70kw&s",
+      "status": "offline",
+      "description": "Казуальный игрок, люблю кооперативные приключения и RPG. Играю для удовольствия, не для соревнований. Ищу дружелюбных сокомандников.",
+      "location": "Санкт-Петербург",
+      "languages": ["русский"],
+      "preferredGenres": ["RPG", "приключения", "кооператив"],
+      "preferredRole": "хилер/поддержка",
+      "schedule": {
+        "weekdays": ["19:00-22:00"],
+        "weekends": ["12:00-23:00"]
+      },
+      "topGames": [
+        {
+          "name": "The Elder Scrolls Online",
+          "playtime": 1420
+        },
+        {
+          "name": "Stardew Valley",
+          "playtime": 652
+        },
+        {
+          "name": "Sea of Thieves",
+          "playtime": 512
+        }
+      ],
+      "lookingFor": ["друзья", "кооператив", "казуальные игры"],
+      "skillLevel": "средний",
+      "voiceChat": true,
+      "voiceChatPlatforms": ["Discord"],
+      "discordTag": "PhantomHealer#7821",
+      "steam": {
+        "steamId": "76561198078923456",
+        "steamLevel": 28,
+        "accountCreated": "2015-06-22",
+        "lastOnline": "2025-03-12T22:15:28Z",
+        "totalPlaytime": 3256,
+        "recentlyPlayed": [
+          {
+            "name": "The Elder Scrolls Online",
+            "appId": 306130,
+            "playtime": 1420,
+            "lastPlayed": "2025-03-12T21:45:22Z"
+          },
+          {
+            "name": "Stardew Valley",
+            "appId": 413150,
+            "playtime": 652,
+            "lastPlayed": "2025-03-11T20:12:18Z"
+          },
+          {
+            "name": "Baldur's Gate 3",
+            "appId": 1086940,
+            "playtime": 310,
+            "lastPlayed": "2025-03-10T19:22:15Z"
+          }
+        ]
+      },
+      "password": "123"
+    },
+    {
+      "id": "user3",
+      "username": "StratCommander",
+      "realName": "Михаил",
+      "age": 29,
+      "emailUser": false,
+      "avatar": "./assets/img/loginFriends.png",
+      "status": "away",
+      "description": "Стратег и командный игрок с 15-летним опытом в RTS и MOBA. Ищу серьезную команду для соревновательных игр. Могу быть капитаном.",
+      "location": "Новосибирск",
+      "languages": ["русский", "английский", "немецкий"],
+      "preferredGenres": ["стратегия", "MOBA", "тактика"],
+      "preferredRole": "капитан/стратег",
+      "schedule": {
+        "weekdays": ["20:00-01:00"],
+        "weekends": ["16:00-03:00"]
+      },
+      "topGames": [
+        {
+          "name": "Dota 2",
+          "playtime": 5286
+        },
+        {
+          "name": "Civilization VI",
+          "playtime": 2345
+        },
+        {
+          "name": "Stellaris",
+          "playtime": 1845
+        }
+      ],
+      "lookingFor": ["команда", "соревнования", "стратегическое планирование"],
+      "skillLevel": "профессиональный",
+      "voiceChat": true,
+      "voiceChatPlatforms": ["Discord", "TeamSpeak", "Steam Voice"],
+      "discordTag": "StratCommander#1234",
+      "steam": {
+        "steamId": "76561198156782345",
+        "steamLevel": 65,
+        "accountCreated": "2010-01-05",
+        "lastOnline": "2025-03-13T16:42:33Z",
+        "totalPlaytime": 12456,
+        "recentlyPlayed": [
+          {
+            "name": "Dota 2",
+            "appId": 570,
+            "playtime": 5286,
+            "lastPlayed": "2025-03-13T14:22:05Z"
+          },
+          {
+            "name": "Civilization VI",
+            "appId": 289070,
+            "playtime": 2345,
+            "lastPlayed": "2025-03-11T23:15:42Z"
+          },
+          {
+            "name": "Total War: WARHAMMER III",
+            "appId": 1142710,
+            "playtime": 678,
+            "lastPlayed": "2025-03-12T21:17:29Z"
+          }
+        ]
+      },
+      "password": "123"
+    }
+  ],
+  "matches": [
+    {
+      "id": "match1",
+      "user1": "user1",
+      "user2": "user3",
+      "timestamp": "2025-03-10T18:22:45Z",
+      "status": "matched",
+      "messages": [
+        {
+          "sender": "user1",
+          "text": "Привет! Видел твои часы в Dota 2. Впечатляет. Какую позицию обычно играешь?",
+          "timestamp": "2025-03-10T18:25:12Z"
+        },
+        {
+          "sender": "user3",
+          "text": "Привет! Спасибо. Обычно играю на 5-й позиции, хард саппорт. А ты?",
+          "timestamp": "2025-03-10T19:01:32Z"
+        }
+      ]
+    }
+  ],
+  "swipes": [
+    {
+      "userId": "user1",
+      "swipedUserId": "user2",
+      "direction": "right",
+      "timestamp": "2025-03-11T14:28:35Z"
+    },
+    {
+      "userId": "user2",
+      "swipedUserId": "user1",
+      "direction": "left",
+      "timestamp": "2025-03-12T10:15:22Z"
+    },
+    {
+      "userId": "user3",
+      "swipedUserId": "user1",
+      "direction": "right",
+      "timestamp": "2025-03-10T17:42:18Z"
+    },
+    {
+      "userId": "user1",
+      "swipedUserId": "user3",
+      "direction": "right",
+      "timestamp": "2025-03-10T18:22:45Z"
+    }
+  ]
+}
