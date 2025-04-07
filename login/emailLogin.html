@@ -68,7 +68,7 @@
                     duration: 5000,
                     gravity: "top",
                     position: "center",
-                    backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)", // Красный градиент
+                    className: "error", // Используем новый класс вместо backgroundColor
                 }).showToast();
                 submitButton.disabled = false;
                 return;
@@ -84,7 +84,7 @@
                     duration: 2000,
                     gravity: "bottom",
                     position: "center",
-                    backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)", // Зеленый градиент
+                    className: "success", // Используем новый класс вместо backgroundColor
                     callback: function() { // Перенаправление после показа тоста
                          window.location.href = '../index.html';
                     }
@@ -96,7 +96,7 @@
                     duration: 4000,
                     gravity: "top", // Ошибки сверху
                     position: "center",
-                    backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)", // Красный
+                    className: "error", // Используем новый класс вместо backgroundColor
                     close: true // Позволить закрыть вручную
                 }).showToast();
                 submitButton.disabled = false; // Разблокируем кнопку

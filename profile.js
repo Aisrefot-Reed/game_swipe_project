@@ -75,9 +75,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     duration: 3000,
                     gravity: "top",
                     position: "center",
-                    style: {
-                        background: "linear-gradient(to right, #ff5f6d, #ffc371)"
-                    }
+                    className: "error"
                 }).showToast();
             }
         });
@@ -129,9 +127,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         duration: 3000,
                         gravity: "bottom",
                         position: "center",
-                        style: {
-                            background: "linear-gradient(to right, #00b09b, #96c93d)"
-                        }
+                        className: "success"
                     }).showToast();
 
                     closeEditModal();
@@ -144,9 +140,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     duration: 3000,
                     gravity: "top",
                     position: "center",
-                    style: {
-                        background: "linear-gradient(to right, #ff5f6d, #ffc371)"
-                    }
+                    className: "error"
                 }).showToast();
             }
         });
@@ -243,9 +237,7 @@ function renderLoginForm(container) {
                 duration: 5000,
                 gravity: "top",
                 position: "center",
-                style: {
-                    background: "linear-gradient(to right, #ff5f6d, #ffc371)"
-                }
+                className: "error"
             }).showToast();
             submitButton.disabled = false;
             return;
@@ -260,9 +252,7 @@ function renderLoginForm(container) {
                 duration: 2000,
                 gravity: "bottom",
                 position: "center",
-                style: {
-                    background: "linear-gradient(to right, #00b09b, #96c93d)"
-                }
+                className: "success"
             }).showToast();
         } else {
             Toastify({
@@ -270,9 +260,7 @@ function renderLoginForm(container) {
                 duration: 4000,
                 gravity: "top",
                 position: "center",
-                style: {
-                    background: "linear-gradient(to right, #ff5f6d, #ffc371)"
-                }
+                className: "error"
             }).showToast();
             submitButton.disabled = false;
         }
@@ -371,9 +359,7 @@ function renderUserProfile(user, container) {
                 duration: 2000,
                 gravity: "bottom",
                 position: "center",
-                style: {
-                    background: "linear-gradient(to right, #6a11cb, #2575fc)"
-                }
+                className: "success"
             }).showToast();
 
             setTimeout(() => renderUnauthorized(container), 500);
@@ -398,9 +384,7 @@ function renderUserProfile(user, container) {
                     duration: 3000,
                     gravity: "top",
                     position: "center",
-                    style: {
-                        background: "linear-gradient(to right, #ff5f6d, #ffc371)"
-                    }
+                    className: "error"
                 }).showToast();
             }
         });
