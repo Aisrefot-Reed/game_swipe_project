@@ -1,6 +1,5 @@
 const formatNumber = (num) => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
-// Определяем функции перед их использованием
 function openModal(user) {
     const oMain = document.querySelector("#main");
     const oModal = document.querySelector(".modal");
@@ -19,12 +18,10 @@ function openModal(user) {
         return;
     }
 
-    // Определяем класс статуса
     const statusClass = user.status === "online" ? "modalStatusOnline" : 
                         user.status === "offline" ? "modalStatusOffline" : 
                         "modalStatusAway";
     
-    // Форматируем статус для отображения
     const statusText = user.status === "online" ? "онлайн" : 
                       user.status === "offline" ? "офлайн" : 
                       "не в сети";
@@ -153,38 +150,33 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log("Текущий пользователь:", loggedInUser);
 
     let db;
-    const mainContainer = document.getElementById("main"); // Получаем контейнер main
+    const mainContainer = document.getElementById("main");
     try {
-        // Показываем индикатор загрузки
         if(mainContainer) mainContainer.innerHTML = '<div class="loading-spinner"></div><p style="text-align:center; margin-top: 10px;">Загрузка пользователей...</p>';
 
         const response = await fetch("./database.json");
-         if (!response.ok) { // Проверка статуса ответа
+         if (!response.ok) {
              throw new Error(`Ошибка сети: ${response.status} ${response.statusText}`);
          }
         db = await response.json();
 
-        // Очищаем индикатор загрузки перед рендерингом
         if(mainContainer) mainContainer.innerHTML = '';
 
     } catch (error) {
         console.error("Ошибка загрузки JSON:", error);
-        // Отображаем ошибку в UI через Toastify
         if (mainContainer) {
-             mainContainer.innerHTML = ''; // Очищаем спиннер
+             mainContainer.innerHTML = '';
          }
          Toastify({
              text: `😕 Не удалось загрузить данные: ${error.message}. Попробуйте обновить страницу.`,
-             duration: -1, // Не закрывать автоматически
+             duration: -1,
              gravity: "top",
              position: "center",
-             backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)",
-             close: true, // Позволить закрыть
-             // Можно добавить кнопку для перезагрузки, но это сложнее с Toastify
-             // onClick: function(){ location.reload(); } // Перезагрузка по клику на тост
+             className: "error",
+             close: true
          }).showToast();
 
-        return; // Прерываем выполнение
+        return;
     }
 
     const main = document.getElementById("main");
@@ -260,7 +252,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     db.users.forEach(user => renderUser(user.id));
     renderUserCards();
 
-    // Обработчик кликов по карточкам
     document.addEventListener("click", (e) => {
         const card = e.target.closest(".userCard");
         const likeButton = e.target.closest(".like");
