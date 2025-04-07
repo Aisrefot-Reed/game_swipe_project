@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход через Steam</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
+    <style>
+        .steam-login-button {
+            background: linear-gradient(to right, #171a21, #2a475e);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 300px;
+            margin: 20px auto;
+        }
+
+        .steam-login-button:hover {
+            background: linear-gradient(to right, #2a475e, #171a21);
+            transform: translateY(-2px);
+        }
+
+        .steam-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .steam-login-container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .steam-login-container p {
+            color: #8f98a0;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h2 class="LogInHeading steamLogin">Вход через Steam</h2>
+        <div class="loginBox">
+            <div class="steam-login-container">
+                <p>Войдите в свой аккаунт через Steam для быстрого доступа</p>
+                <button class="steam-login-button" id="steamLoginButton">
+                    <img src="https://store.steampowered.com/favicon.ico" alt="Steam" class="steam-icon">
+                    Войти через Steam
+                </button>
+                <a href="emailLogin.html" class="form-link">Или войдите через Email</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="../auth.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+        document.getElementById('steamLoginButton').addEventListener('click', async function() {
+            // В реальном приложении здесь будет OAuth авторизация через Steam
+            // Сейчас просто показываем сообщение
+            Toastify({
+                text: "Функция входа через Steam будет доступна в следующем обновлении",
+                duration: 3000,
+                gravity: "top",
+                position: "center",
+                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+            }).showToast();
+        });
+    </script>
+</body>
+</html> 
