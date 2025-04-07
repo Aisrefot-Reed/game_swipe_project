@@ -106,6 +106,7 @@ function openModal(user) {
             </div>
 
             <button class="modalLikeButton">Лайк</button>
+            <button class="modalDislikeButton">Дизлайк</button>
         </div>
     `;
 
@@ -119,8 +120,107 @@ function openModal(user) {
     const likeButton = modalBody.querySelector('.modalLikeButton');
     if (likeButton) {
         likeButton.addEventListener('click', () => {
-            console.log(`Пользователь ${user.username} понравился!`);
-            closeModal();
+            console.log('Пользователь поставил лайк:', user.username);
+            
+            // Получаем текущие лайки пользователя
+            const userLikes = JSON.parse(localStorage.getItem(`likes_${loggedInUser}`) || '[]');
+            
+            // Проверяем, не лайкал ли уже этого пользователя
+            const alreadyLiked = userLikes.some(like => like.userId === user.id);
+            
+            if (!alreadyLiked) {
+                // Добавляем новый лайк с временной меткой
+                const newLike = {
+                    userId: user.id,
+                    username: user.username,
+                    timestamp: new Date().toISOString()
+                };
+                
+                userLikes.push(newLike);
+                localStorage.setItem(`likes_${loggedInUser}`, JSON.stringify(userLikes));
+                
+                // Проверяем взаимный лайк
+                const otherUserLikes = JSON.parse(localStorage.getItem(`likes_${user.username}`) || '[]');
+                const isMutual = otherUserLikes.some(like => like.userId === currentUser.id);
+                
+                if (isMutual) {
+                    Toastify({
+                        text: `У вас взаимная симпатия с ${user.username}!`,
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        className: "success"
+                    }).showToast();
+                } else {
+                    Toastify({
+                        text: `Вы поставили лайк пользователю ${user.username}`,
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        className: "success"
+                    }).showToast();
+                }
+                
+                // Закрываем модальное окно
+                oModal.style.display = 'none';
+            } else {
+                Toastify({
+                    text: `Вы уже поставили лайк пользователю ${user.username}`,
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    className: "info"
+                }).showToast();
+            }
+        });
+    }
+    
+    const dislikeButton = modalBody.querySelector('.modalDislikeButton');
+    if (dislikeButton) {
+        dislikeButton.addEventListener('click', () => {
+            console.log('Пользователь поставил дизлайк:', user.username);
+            
+            // Получаем текущие дизлайки пользователя
+            const userDislikes = JSON.parse(localStorage.getItem(`dislikes_${loggedInUser}`) || '[]');
+            
+            // Проверяем, не дизлайкал ли уже этого пользователя
+            const alreadyDisliked = userDislikes.some(dislike => dislike.userId === user.id);
+            
+            if (!alreadyDisliked) {
+                // Добавляем новый дизлайк с временной меткой
+                const newDislike = {
+                    userId: user.id,
+                    username: user.username,
+                    timestamp: new Date().toISOString()
+                };
+                
+                userDislikes.push(newDislike);
+                localStorage.setItem(`dislikes_${loggedInUser}`, JSON.stringify(userDislikes));
+                
+                // Удаляем лайк, если он был
+                const userLikes = JSON.parse(localStorage.getItem(`likes_${loggedInUser}`) || '[]');
+                const updatedLikes = userLikes.filter(like => like.userId !== user.id);
+                localStorage.setItem(`likes_${loggedInUser}`, JSON.stringify(updatedLikes));
+                
+                Toastify({
+                    text: `Вы поставили дизлайк пользователю ${user.username}`,
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    className: "error"
+                }).showToast();
+                
+                // Закрываем модальное окно
+                oModal.style.display = 'none';
+            } else {
+                Toastify({
+                    text: `Вы уже поставили дизлайк пользователю ${user.username}`,
+                    duration: 3000,
+                    gravity: "top",
+                    position: "right",
+                    className: "info"
+                }).showToast();
+            }
         });
     }
 }
@@ -138,138 +238,205 @@ function closeModal() {
     oMain.classList.remove("closed");
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
+async function renderUserCards() {
+    const main = document.getElementById('main');
+    if (!main) return;
+
     const loggedInUser = localStorage.getItem('loggedInUser');
-
     if (!loggedInUser) {
-        alert('Пожалуйста, войдите в систему.');
-        window.location.href = './login/emailLogin.html';
+        main.innerHTML = `
+            <div class="unauthorized-container">
+                <h2>Для просмотра пользователей необходимо войти</h2>
+                <a href="./login/emailLogin.html" class="btn btn-primary">Войти</a>
+            </div>
+        `;
         return;
     }
 
-    console.log("Текущий пользователь:", loggedInUser);
-
-    let db;
-    const mainContainer = document.getElementById("main");
     try {
-        if(mainContainer) mainContainer.innerHTML = '<div class="loading-spinner"></div><p style="text-align:center; margin-top: 10px;">Загрузка пользователей...</p>';
-
         const response = await fetch("./database.json");
-         if (!response.ok) {
-             throw new Error(`Ошибка сети: ${response.status} ${response.statusText}`);
-         }
-        db = await response.json();
+        if (!response.ok) throw new Error('Ошибка загрузки данных');
+        const db = await response.json();
 
-        if(mainContainer) mainContainer.innerHTML = '';
+        // Получаем текущие лайки и дизлайки пользователя
+        const userLikes = JSON.parse(localStorage.getItem(`likes_${loggedInUser}`) || '[]');
+        const userDislikes = JSON.parse(localStorage.getItem(`dislikes_${loggedInUser}`) || '[]');
 
-    } catch (error) {
-        console.error("Ошибка загрузки JSON:", error);
-        if (mainContainer) {
-             mainContainer.innerHTML = '';
-         }
-         Toastify({
-             text: `😕 Не удалось загрузить данные: ${error.message}. Попробуйте обновить страницу.`,
-             duration: -1,
-             gravity: "top",
-             position: "center",
-             className: "error",
-             close: true
-         }).showToast();
+        // Фильтруем пользователей
+        const filteredUsers = db.users.filter(user => {
+            // Пропускаем текущего пользователя
+            if (user.username === loggedInUser) {
+                console.log("Пропускаем рендеринг текущего пользователя:", loggedInUser);
+                return false;
+            }
 
-        return;
-    }
+            // Пропускаем дизлайкнутых пользователей
+            if (userDislikes.some(dislike => dislike.userId === user.id)) {
+                console.log("Пропускаем дизлайкнутого пользователя:", user.username);
+                return false;
+            }
 
-    const main = document.getElementById("main");
-    if (!main) {
-        console.error("Элемент с id='main' не найден");
-        return;
-    }
-
-    const cleanUsername = (username) => username.replace(/#\d{4}$/, "");
-    const userCards = [];
-
-    const renderUser = (userId) => {
-        const user = db.users.find(u => u.id === userId);
-        if (!user) {
-            console.error(`Пользователь с ID ${userId} не найден`);
-            return;
-        }
-        if (user.username === loggedInUser) {
-            console.log(`Пропускаем рендеринг текущего пользователя: ${loggedInUser}`);
-            return;
-        }
-
-        const statusClass = user.status === "online" ? "status-online" :
-                            user.status === "offline" ? "status-offline" : "status-away";
-        const statusIcon = user.status === "online" ? "🟢" :
-                           user.status === "offline" ? "🔴" : "🟡";
-
-        const topGames = user.topGames?.length ? `
-            <div class="section-title">🎮 Топ игры:</div>
-            <ul class="game-list">
-                ${user.topGames.slice(0, 3).map(game => `<li>${game.name} — ${formatNumber(game.playtime)} часов</li>`).join("")}
-            </ul>
-        ` : "";
-
-        const languages = user.languages?.length ? `<p>Языки🗣 ${user.languages.join(", ")}</p>` : "";
-        const location = user.location ? `<p>Город📍 ${user.location}</p>` : "";
-        const voiceChat = user.voiceChat ? `<p>Войс-чаты🎙 ${user.voiceChatPlatforms.join(", ")}</p>` : "";
-
-        userCards.push({
-            userId: user.id,
-            avatar: user.avatar,
-            username: cleanUsername(user.username),
-            age: user.age,
-            statusClass: statusClass,
-            statusIcon: statusIcon,
-            realName: user.realName,
-            skillLevel: user.skillLevel,
-            description: user.description,
-            topGames: topGames,
-            location: location,
-            languages: languages,
-            voiceChat: voiceChat
+            return true;
         });
-    };
 
-    const renderUserCards = () => {
-        console.log("Рендерим карточки пользователей:", userCards);
-        userCards.forEach(userCard => {
-            main.insertAdjacentHTML("beforeend", `
-                <div class="userCard" id="${userCard.userId}" data-user-id="${userCard.userId}">
-                    <img src="${userCard.avatar}" alt="${userCard.username}'s avatar" class="userAvatar">
-                    <p class="userName">${userCard.username}</p>
-                    <p class="userAge aBitGray">Возраст: ${userCard.age}</p>
-                    <div class="userLastLine">
-                        <p class="${userCard.statusClass} aBitGray">${userCard.statusClass === 'status-online' ? 'онлайн' : 'офлайн'}</p>
-                        <button class="btn btn-primary like" title="Лайк">Лайк</button>
+        console.log("Рендерим карточки пользователей:", filteredUsers);
+
+        // Очищаем контейнер
+        main.innerHTML = '';
+
+        // Создаем карточки для каждого пользователя
+        filteredUsers.forEach(user => {
+            const userCard = document.createElement('div');
+            userCard.className = 'userCard';
+            userCard.id = user.id;
+            
+            // Проверяем, лайкнут ли пользователь
+            const isLiked = userLikes.some(like => like.userId === user.id);
+            
+            userCard.innerHTML = `
+                <img src="${user.avatar}" alt="${user.username}" class="userAvatar">
+                <h3 class="userName">${user.username}</h3>
+                <p class="aBitGray">Возраст: ${user.age}</p>
+                <div class="userLastLine">
+                    <span class="aBitGray status-${user.status}">${user.status === 'online' ? 'онлайн' : 'офлайн'}</span>
+                    <div class="user-actions">
+                        <button class="like ${isLiked ? 'active' : ''}" title="Лайк">
+                            <i class="bi bi-heart${isLiked ? '-fill' : ''}"></i>
+                        </button>
+                        <button class="dislike" title="Дизлайк">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
                     </div>
                 </div>
-            `);
-        });
-    };
+            `;
 
-    db.users.forEach(user => renderUser(user.id));
-    renderUserCards();
+            // Добавляем обработчики для кнопок
+            const likeButton = userCard.querySelector('.like');
+            const dislikeButton = userCard.querySelector('.dislike');
 
-    document.addEventListener("click", (e) => {
-        const card = e.target.closest(".userCard");
-        const likeButton = e.target.closest(".like");
+            likeButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (!loggedInUser) {
+                    Toastify({
+                        text: "Для лайков необходимо войти в систему",
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        className: "error"
+                    }).showToast();
+                    return;
+                }
 
-        if (likeButton) {
-            console.log("Клик по кнопке Лайк");
-            return;
-        }
+                const currentLikes = JSON.parse(localStorage.getItem(`likes_${loggedInUser}`) || '[]');
+                const alreadyLiked = currentLikes.some(like => like.userId === user.id);
 
-        if (card) {
-            const userId = card.dataset.userId;
-            const user = db.users.find(u => u.id === userId);
-            if (user) {
-                console.log(`Открываем модалку для ${user.username}`);
+                if (!alreadyLiked) {
+                    const newLike = {
+                        userId: user.id,
+                        timestamp: new Date().toISOString()
+                    };
+                    currentLikes.push(newLike);
+                    localStorage.setItem(`likes_${loggedInUser}`, JSON.stringify(currentLikes));
+
+                    // Обновляем внешний вид кнопки
+                    likeButton.classList.add('active');
+                    likeButton.querySelector('i').classList.replace('bi-heart', 'bi-heart-fill');
+
+                    // Проверяем взаимный лайк
+                    const otherUserLikes = JSON.parse(localStorage.getItem(`likes_${user.username}`) || '[]');
+                    const isMutual = otherUserLikes.some(l => l.userId === loggedInUser);
+
+                    if (isMutual) {
+                        Toastify({
+                            text: `У вас взаимная симпатия с ${user.username}!`,
+                            duration: 3000,
+                            gravity: "top",
+                            position: "right",
+                            className: "success"
+                        }).showToast();
+                    } else {
+                        Toastify({
+                            text: `Вы поставили лайк пользователю ${user.username}`,
+                            duration: 3000,
+                            gravity: "top",
+                            position: "right",
+                            className: "success"
+                        }).showToast();
+                    }
+                } else {
+                    // Убираем лайк
+                    const updatedLikes = currentLikes.filter(like => like.userId !== user.id);
+                    localStorage.setItem(`likes_${loggedInUser}`, JSON.stringify(updatedLikes));
+
+                    // Обновляем внешний вид кнопки
+                    likeButton.classList.remove('active');
+                    likeButton.querySelector('i').classList.replace('bi-heart-fill', 'bi-heart');
+
+                    Toastify({
+                        text: `Вы убрали лайк у пользователя ${user.username}`,
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        className: "info"
+                    }).showToast();
+                }
+            });
+
+            dislikeButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (!loggedInUser) {
+                    Toastify({
+                        text: "Для дизлайков необходимо войти в систему",
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        className: "error"
+                    }).showToast();
+                    return;
+                }
+
+                const currentDislikes = JSON.parse(localStorage.getItem(`dislikes_${loggedInUser}`) || '[]');
+                const alreadyDisliked = currentDislikes.some(dislike => dislike.userId === user.id);
+
+                if (!alreadyDisliked) {
+                    const newDislike = {
+                        userId: user.id,
+                        timestamp: new Date().toISOString()
+                    };
+                    currentDislikes.push(newDislike);
+                    localStorage.setItem(`dislikes_${loggedInUser}`, JSON.stringify(currentDislikes));
+
+                    // Удаляем лайк, если он был
+                    const currentLikes = JSON.parse(localStorage.getItem(`likes_${loggedInUser}`) || '[]');
+                    const updatedLikes = currentLikes.filter(like => like.userId !== user.id);
+                    localStorage.setItem(`likes_${loggedInUser}`, JSON.stringify(updatedLikes));
+
+                    // Скрываем карточку пользователя
+                    userCard.style.display = 'none';
+
+                    Toastify({
+                        text: `Вы больше не будете видеть пользователя ${user.username}`,
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        className: "info"
+                    }).showToast();
+                }
+            });
+
+            // Добавляем обработчик для открытия модалки
+            userCard.addEventListener('click', () => {
                 openModal(user);
-            } else {
-                console.error(`Пользователь с ID ${userId} не найден в db`);
-            }
-        }
-    });
-});
+            });
+
+            main.appendChild(userCard);
+        });
+
+    } catch (error) {
+        console.error('Ошибка:', error);
+        main.innerHTML = '<p class="error-message">Не удалось загрузить пользователей. Попробуйте позже.</p>';
+    }
+}
+
+// Вызываем функцию при загрузке страницы
+document.addEventListener('DOMContentLoaded', renderUserCards);
